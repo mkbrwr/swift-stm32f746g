@@ -646,10 +646,43 @@ extension STM32F746 {
 
     ltdc.bccr.rawValue = 0x00_00_00_00  // background color
 
+    ltdc.l2pfcr.rawValue = 1  // Format RGB888
+    ltdc.l2cfbar.rawValue = UInt32(FrameBuffer.startAddress)
+    ltdc.l2cacr.consta = 255
+    ltdc.l2bfcr.bf1 = 5
+    ltdc.l2bfcr.bf2 = 4
+    ltdc.l2cfblr.rawValue =
+    UInt32(UInt32(LTDCConstants.pixelSize * LTDCConstants.layerWidth) << 16)
+    | UInt32(LTDCConstants.pixelSize * LTDCConstants.layerWidth + 3)
+    ltdc.l2cfblnr.cfblnbr = UInt16(LTDCConstants.layerHeight)
+    ltdc.l2cr.len = 1
+
     ltdc.srcr.vbr = 1  // reload
 
     ltdc.gcr.ltdcen = 1
   }
+
+    static func setLayer2Position(_ point: Point) {
+        // swift-format-ignore: NeverForceUnwrap
+        var ltdc = LTDC(
+            baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)
+        let i: Int =
+        ((LTDCConstants.layerWidth + LTDCConstants.hbp + LTDCConstants.hsync - 1
+          + point.x) << 16) | (LTDCConstants.hbp + LTDCConstants.hsync + point.x)
+        ltdc.l2whpcr.rawValue = UInt32(i)
+        let j: Int =
+        ((LTDCConstants.layerHeight + LTDCConstants.vsync + LTDCConstants.vbp - 1
+          + point.y) << 16) | (LTDCConstants.vsync + LTDCConstants.vbp + point.y)
+        ltdc.l2wvpcr.rawValue = UInt32(j)
+        ltdc.srcr.vbr = 1
+    }
+
+    static func reloadLayer2() {
+        // swift-format-ignore: NeverForceUnwrap
+        var ltdc = LTDC(
+            baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)
+        ltdc.srcr.vbr = 1
+    }
 
   static func setBackgroundColor(_ color: Color) {
     // swift-format-ignore: NeverForceUnwrap

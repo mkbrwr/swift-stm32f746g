@@ -22,6 +22,8 @@ struct STM32F746Board {
         STM32F746.configureFlash()
 
         STM32F746.configureLTCD()
+
+        moveLayer(to: Point(x: 120, y: 66))
     }
 
     mutating func ledOn() {
@@ -34,6 +36,14 @@ struct STM32F746Board {
 
     mutating func ledToggle() {
         led.toggle()
+    }
+
+    mutating func moveLayer(to point: Point) {
+        STM32F746.setLayer2Position(point)
+    }
+
+    mutating func reloadLayer() {
+        STM32F746.reloadLayer2()
     }
 
     mutating func setBackgroundColor(color: Color) {
