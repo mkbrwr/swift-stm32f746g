@@ -18,6 +18,7 @@ public protocol GPIOPlatform {
     static func deassert(_ pin: Pin, _ configuration: GPIOConfiguration)
     static func value(_ pin: Pin) -> Bool
 }
+
 public enum STM32F746 {}
 
 public enum Mode {

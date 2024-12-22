@@ -9,10 +9,15 @@
 struct Main {
     static func main() {
         var led = LED()
+        var button = Button()
 
         while true {
-            led.toggle()
-            delay(ms: 100)
+            if button.isPressed() {
+                led.on()
+            } else {
+                led.toggle()
+                delay(ms: 10)
+            }
         }
     }
 }
