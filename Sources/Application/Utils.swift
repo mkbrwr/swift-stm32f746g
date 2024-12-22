@@ -7,7 +7,7 @@
 
 import Support
 
-func delay(ms milliseconds: Int) {
+public func delay(ms milliseconds: Int) {
     for _ in 0..<100_000 * milliseconds {
         nop()
     }

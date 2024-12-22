@@ -684,12 +684,12 @@ extension STM32F746 {
         ltdc.srcr.vbr = 1
     }
 
-  static func setBackgroundColor(_ color: Color) {
-    // swift-format-ignore: NeverForceUnwrap
-    var ltdc = LTDC(
-      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)
+    static func setBackgroundColor(_ color: FrameBuffer.Color) {
+        // swift-format-ignore: NeverForceUnwrap
+        var ltdc = LTDC(
+            baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)
 
-    ltdc.bccr.rawValue = UInt32(color.r | (color.g << 8) | (color.b << 16))
-  }
+        ltdc.bccr.rawValue = UInt32(color.r | (color.g << 8) | (color.b << 16))
+    }
 }
 

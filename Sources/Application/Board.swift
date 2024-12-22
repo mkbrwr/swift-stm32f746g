@@ -23,7 +23,7 @@ struct STM32F746Board {
 
         STM32F746.configureLTCD()
 
-        moveLayer(to: Point(x: 120, y: 66))
+        moveLayer(to: .init(x: 120, y: 66))
     }
 
     mutating func ledOn() {
@@ -46,7 +46,7 @@ struct STM32F746Board {
         STM32F746.reloadLayer2()
     }
 
-    mutating func setBackgroundColor(color: Color) {
+    mutating func setBackgroundColor(color: FrameBuffer.Color) {
         STM32F746.setBackgroundColor(color)
     }
 
@@ -60,4 +60,16 @@ struct STM32F746Board {
             height: STM32F746.LTDCConstants.layerHeight
         )
     }
+}
+
+struct Point {
+    var x, y: Int
+
+    func offset(by: Point) -> Point {
+        Point(x: x + by.x, y: y + by.y)
+    }
+}
+
+struct Size {
+    var width, height: Int
 }
