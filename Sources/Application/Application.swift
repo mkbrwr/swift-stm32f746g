@@ -8,15 +8,12 @@
 @main
 struct Main {
     static func main() {
-        var led = LED()
-        var button = Button()
+        var board = STM32F746Board()
 
         while true {
-            if button.isPressed() {
-                led.on()
-            } else {
-                led.toggle()
-                delay(ms: 10)
+            for color in rainbowColors {
+                board.setBackgroundColor(color: Color(r: color.0, g: color.1, b: color.2))
+                delay(ms: 1000)
             }
         }
     }

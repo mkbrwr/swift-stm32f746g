@@ -329,4 +329,334 @@ extension STM32F746 {
         case .k: rcc.ahb1enr.gpioken = 1
         }
     }
+
+  public static func enableUARTClock(_ uartNum: UInt8) {
+    // swift-format-ignore: NeverForceUnwrap
+    var rcc = RCC(
+      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4002_3800)!)
+    switch uartNum {
+    case 1: rcc.apb2enr.usart1en = 1
+    case 2: rcc.apb1enr.usart2en = 1
+    case 3: rcc.apb1enr.usart3en = 1
+    case 4: rcc.apb1enr.uart4en = 1
+    case 5: rcc.apb1enr.uart5en = 1
+    case 6: rcc.apb2enr.usart6en = 1
+    case 7: rcc.apb1enr.uart7enr = 1
+    case 8: rcc.apb1enr.uart8enr = 1
+    default: return
+    }
+  }
+
+  public static func enableI2CClock(_ i2cNum: UInt8) {
+    // swift-format-ignore: NeverForceUnwrap
+    var rcc = RCC(
+      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4002_3800)!)
+    switch i2cNum {
+    case 1: rcc.apb1enr.i2c1en = 1
+    case 2: rcc.apb1enr.i2c2en = 1
+    case 3: rcc.apb1enr.i2c3en = 1
+    case 4: rcc.apb1enr.i2c4en = 1
+    default: return
+    }
+  }
+
+  public static func enableSPIClock(_ spiNum: UInt8) {
+    // swift-format-ignore: NeverForceUnwrap
+    var rcc = RCC(
+      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4002_3800)!)
+    switch spiNum {
+    case 1: rcc.apb2enr.spi1en = 1
+    case 2: rcc.apb1enr.spi2en = 1
+    case 3: rcc.apb1enr.spi3en = 1
+    case 4: rcc.apb2enr.spi4enr = 1
+    case 5: rcc.apb2enr.spi5enr = 1
+    case 6: rcc.apb2enr.spi6enr = 1
+    default: return
+    }
+  }
+
+  public static func configureFlash() {
+    let flash = UnsafeMutableRawPointer(bitPattern: (0x4002_3C00))
+    // swift-format-ignore: NeverForceUnwrap
+    let flashAcr = UnsafeMutablePointer<UInt32>(
+      bitPattern: UInt(bitPattern: flash))!
+    // Set FLASH_ACR to 0x5
+    flashAcr.volatileStore(0x5)
+  }
+
+  public static func initializeLTCD() {
+    // swift-format-ignore: NeverForceUnwrap
+    var rcc = RCC(
+      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4002_3800)!)
+    rcc.cfgr.rawValue = 0
+    rcc.cr.hsion = 1
+    rcc.cr.csson = 0
+    rcc.cr.pllon = 0
+    rcc.cr.hsebyp = 0
+    rcc.cr.hseon = 1
+    while rcc.cr.hserdy == 0 {}
+  }
+
+  enum LTDCConstants {
+    static let hsync = 30
+    static let vsync = 10
+    static let hbp = 13
+    static let hfp = 32
+    static let vbp = 2
+    static let vfp = 2
+
+    static let pixelSize = 3
+
+    static let displayWidth = 480
+    static let displayHeight = 272
+
+    static let layerWidth = 240
+    static let layerHeight = 136
+  }
+
+  public static func configureLTCD() {
+    // swift-format-ignore: NeverForceUnwrap
+    var ltdc = LTDC(
+      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)
+    // swift-format-ignore: NeverForceUnwrap
+    var rcc = RCC(
+      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4002_3800)!)
+
+    rcc.pllcfgr.rawValue = 0
+    rcc.pllcfgr.pllm0 = 1
+    rcc.pllcfgr.pllm3 = 1
+    rcc.pllcfgr.pllm4 = 1
+    rcc.pllcfgr.plln4 = 1
+    rcc.pllcfgr.plln5 = 1
+    rcc.pllcfgr.plln7 = 1
+    rcc.pllcfgr.plln8 = 1
+    rcc.pllcfgr.pllsrc = 1
+
+    rcc.cr.pllon = 1
+    while rcc.cr.pllrdy == 0 {}
+
+    rcc.cfgr.rawValue &= 0b11
+    rcc.cfgr.rawValue |= 0b10
+    while rcc.cfgr.rawValue & 0b1100 != 0b1000 {}
+
+    rcc.pllsaicfgr.pllsain = 192
+    rcc.pllsaicfgr.pllsair = 5
+    rcc.dkcfgr1.pllsaidivr = 1
+
+    rcc.cr.pllsaion = 1
+    while rcc.cr.pllsairdy == 0 {}
+
+    STM32F746.enableGPIOPortClock(.i)
+
+    STM32F746.enableGPIOPortClock(.a)
+    STM32F746.enableGPIOPortClock(.b)
+    STM32F746.enableGPIOPortClock(.c)
+    STM32F746.enableGPIOPortClock(.d)
+    STM32F746.enableGPIOPortClock(.e)
+    STM32F746.enableGPIOPortClock(.f)
+    STM32F746.enableGPIOPortClock(.g)
+    STM32F746.enableGPIOPortClock(.h)
+    STM32F746.enableGPIOPortClock(.j)
+    STM32F746.enableGPIOPortClock(.k)
+
+    var clkPin = HALGPIO<STM32F746>(pin: .init(port: .i, number: 14))
+    var dePin = HALGPIO<STM32F746>(pin: .init(port: .k, number: 7))
+    var hsyncPin = HALGPIO<STM32F746>(pin: .init(port: .i, number: 10))
+    var vsyncPin = HALGPIO<STM32F746>(pin: .init(port: .i, number: 9))
+
+    clkPin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: false)
+    )
+    dePin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: false)
+    )
+    hsyncPin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: false)
+    )
+    vsyncPin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: false)
+    )
+
+    var r0Pin = HALGPIO<STM32F746>(pin: .init(port: .i, number: 15))
+    var r1Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 0))
+    var r2Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 1))
+    var r3Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 2))
+    var r4Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 3))
+    var r5Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 4))
+    var r6Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 5))
+    var r7Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 6))
+
+    r0Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    r1Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    r2Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    r3Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    r4Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    r5Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    r6Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    r7Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+
+    var g0Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 7))
+    var g1Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 8))
+    var g2Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 9))
+    var g3Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 10))
+    var g4Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 11))
+    var g5Pin = HALGPIO<STM32F746>(pin: .init(port: .k, number: 0))
+    var g6Pin = HALGPIO<STM32F746>(pin: .init(port: .k, number: 1))
+    var g7Pin = HALGPIO<STM32F746>(pin: .init(port: .k, number: 2))
+
+    g0Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    g1Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    g2Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    g3Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    g4Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    g5Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    g6Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    g7Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+
+    var b0Pin = HALGPIO<STM32F746>(pin: .init(port: .e, number: 4))
+    var b1Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 13))
+    var b2Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 14))
+    var b3Pin = HALGPIO<STM32F746>(pin: .init(port: .j, number: 15))
+    var b4Pin = HALGPIO<STM32F746>(pin: .init(port: .g, number: 12))
+    var b5Pin = HALGPIO<STM32F746>(pin: .init(port: .k, number: 4))
+    var b6Pin = HALGPIO<STM32F746>(pin: .init(port: .k, number: 5))
+    var b7Pin = HALGPIO<STM32F746>(pin: .init(port: .k, number: 6))
+
+    b0Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    b1Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    b2Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    b3Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    b4Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction9 /*!*/,
+        activeHigh: true))
+    b5Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    b6Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+    b7Pin.configure(
+      configuration: .init(
+        mode: .alternateFunction, outputType: .pushPull, outputSpeed: .high,
+        pull: .none, alternateFunction: .alternateFunction14, activeHigh: true))
+
+    var backlightPin = HALGPIO<STM32F746>(pin: .init(port: .k, number: 3))
+    backlightPin.configure(
+      configuration: .init(
+        mode: .output, outputType: .pushPull, outputSpeed: .low, pull: .down,
+        alternateFunction: .none, activeHigh: true))
+
+    var lcdDispPin = HALGPIO<STM32F746>(pin: .init(port: .i, number: 12))
+    lcdDispPin.configure(
+      configuration: .init(
+        mode: .output, outputType: .pushPull, outputSpeed: .low, pull: .down,
+        alternateFunction: .none, activeHigh: true))
+
+    lcdDispPin.assert()
+    backlightPin.assert()
+    rcc.apb2enr.ltdcen = 1
+
+    ltdc.sscr.vsh = UInt16(LTDCConstants.vsync - 1)
+    ltdc.sscr.hsw = UInt16(LTDCConstants.hsync - 1)
+    ltdc.bpcr.ahbp = UInt16(LTDCConstants.hsync + LTDCConstants.hbp - 1)
+    ltdc.bpcr.avbp = UInt16(LTDCConstants.vsync + LTDCConstants.vbp - 1)
+    ltdc.awcr.aah = UInt16(
+      LTDCConstants.displayHeight + LTDCConstants.vsync + LTDCConstants.vbp - 1
+    )
+    ltdc.awcr.aav = UInt16(
+      LTDCConstants.displayWidth + LTDCConstants.hsync + LTDCConstants.hbp - 1)
+    ltdc.twcr.totalw = UInt16(
+      LTDCConstants.displayWidth + LTDCConstants.hsync + LTDCConstants.hbp
+        + LTDCConstants.hfp - 1)
+    ltdc.twcr.totalh = UInt16(
+      LTDCConstants.displayHeight + LTDCConstants.vsync + LTDCConstants.vbp
+        + LTDCConstants.vfp - 1)
+
+    ltdc.bccr.rawValue = 0x00_00_00_00  // background color
+
+    ltdc.srcr.vbr = 1  // reload
+
+    ltdc.gcr.ltdcen = 1
+  }
+
+  static func setBackgroundColor(_ color: Color) {
+    // swift-format-ignore: NeverForceUnwrap
+    var ltdc = LTDC(
+      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)
+
+    ltdc.bccr.rawValue = UInt32(color.r | (color.g << 8) | (color.b << 16))
+  }
 }
+
