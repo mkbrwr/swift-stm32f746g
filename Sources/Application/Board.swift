@@ -23,7 +23,7 @@ struct STM32F746Board {
 
         STM32F746.configureLTCD()
 
-        moveLayer(to: .init(x: 120, y: 66))
+        moveLayer(to: .init(x: 0, y: 0))
     }
 
     mutating func ledOn() {
@@ -43,11 +43,7 @@ struct STM32F746Board {
     }
 
     mutating func reloadLayer() {
-        STM32F746.reloadLayer2()
-    }
-
-    mutating func setBackgroundColor(color: FrameBuffer.Color) {
-        STM32F746.setBackgroundColor(color)
+        STM32F746.setLayer2Position(Point(x: 120, y: 67))
     }
 
     func isButtonPressed() -> Bool {

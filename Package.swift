@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
   name: "Swift-STM32F746G",
   platforms: [
-    .macOS(.v10_15)
+    .macOS(.v14)
   ],
   products: [
     .library(name: "Application", type: .static, targets: ["Application"])
@@ -30,12 +30,6 @@ let package = Package(
     .target(
       name: "Screen",
       dependencies: [],
-      swiftSettings: [
-        .enableExperimentalFeature("Embedded")
-      ]),
-    .target(
-      name: "Game",
-      dependencies: ["Engine"],
       swiftSettings: [
         .enableExperimentalFeature("Embedded")
       ]),

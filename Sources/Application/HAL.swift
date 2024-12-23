@@ -405,13 +405,13 @@ extension STM32F746 {
     static let vbp = 2
     static let vfp = 2
 
-    static let pixelSize = 3
+    static let pixelSize = 1
 
     static let displayWidth = 480
     static let displayHeight = 272
 
-    static let layerWidth = 240
-    static let layerHeight = 136
+    static let layerWidth = 480
+    static let layerHeight = 272
   }
 
   public static func configureLTCD() {
@@ -644,10 +644,10 @@ extension STM32F746 {
       LTDCConstants.displayHeight + LTDCConstants.vsync + LTDCConstants.vbp
         + LTDCConstants.vfp - 1)
 
-    ltdc.bccr.rawValue = 0x00_00_00_00  // background color
+    ltdc.bccr.rawValue = 0x00_11_11_11  // background color
 
-    ltdc.l2pfcr.rawValue = 1  // Format RGB888
-    ltdc.l2cfbar.rawValue = UInt32(FrameBuffer.startAddress)
+    ltdc.l2pfcr.rawValue = 5  // L8
+    ltdc.l2cfbar.rawValue = UInt32(FrameBuffer.startAddress1)
     ltdc.l2cacr.consta = 255
     ltdc.l2bfcr.bf1 = 5
     ltdc.l2bfcr.bf2 = 4
@@ -674,22 +674,6 @@ extension STM32F746 {
         ((LTDCConstants.layerHeight + LTDCConstants.vsync + LTDCConstants.vbp - 1
           + point.y) << 16) | (LTDCConstants.vsync + LTDCConstants.vbp + point.y)
         ltdc.l2wvpcr.rawValue = UInt32(j)
-        ltdc.srcr.vbr = 1
-    }
-
-    static func reloadLayer2() {
-        // swift-format-ignore: NeverForceUnwrap
-        var ltdc = LTDC(
-            baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)
-        ltdc.srcr.vbr = 1
-    }
-
-    static func setBackgroundColor(_ color: FrameBuffer.Color) {
-        // swift-format-ignore: NeverForceUnwrap
-        var ltdc = LTDC(
-            baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)
-
-        ltdc.bccr.rawValue = UInt32(color.r | (color.g << 8) | (color.b << 16))
+        ltdc.srcr.vbr = 1 // reload
     }
 }
-

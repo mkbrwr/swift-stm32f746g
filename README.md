@@ -1,3 +1,7 @@
+# SETUP
+Edit .zshrc to export toolchain \
+export TOOLCHAINS='org.swift.610202412121a'
+
 # BUILD
 make
 

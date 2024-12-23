@@ -18,7 +18,7 @@ public struct Engine<S: Screen> where S.Color == Color, S.Position == Point {
         Entity(
             position: .init(x: 0, y: 0),
             direction: .init(x: 1, y: 2),
-            sprite: .init(size: .init(width: 10, height: 10), color: (0xff, 0x00, 0xff))
+            sprite: .init(size: .init(width: 10, height: 10), color: (0xff))
         )
     ]
 

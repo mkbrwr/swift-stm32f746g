@@ -5,26 +5,18 @@
 //  Created by Mykhailo Tymchyshyn on 22.12.2024.
 //
 
-import Support
-import Engine
-
 @main
 struct Main {
     static func main() {
         var board = STM32F746Board()
-        let engine = Engine(screen: board)
-
-        engine.start()
 
         while true {
-            FrameBuffer.fillBuffer(color: FrameBuffer.Color(r: 0x00, g: 0x00, b: 0x00))
-            engine.update()
-            if board.isButtonPressed() {
-                engine.receive(inputs: [.buttonPress])
+            for color in UInt8.grayShades {
+                FrameBuffer.fillCurrent(.init(l: color))
+                board.moveLayer(to: .init(x: 0, y: 0))
+                board.ledToggle()
+                delay(ms: 42)
             }
-            board.reloadLayer()
-            board.ledToggle()
-            delay(ms: 42)
         }
     }
 }

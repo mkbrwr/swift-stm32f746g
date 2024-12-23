@@ -9,10 +9,10 @@ import Screen
 
 extension STM32F746Board: Screen {
     var size: (width: Int, height: Int) {
-        (width: 240, height: 136)
+        (width: 480, height: 272)
     }
 
-    func draw(_ color: (UInt8, UInt8, UInt8), at: (Int, Int)) {
-        FrameBuffer.draw(color: .init(r: color.0, g: color.1, b: color.2), at: .init(x: at.0, y: at.1))
+    func draw(_ color: UInt8, at: (Int, Int)) {
+        FrameBuffer.draw(color: .init(l: color), at: .init(x: at.0, y: at.1))
     }
 }

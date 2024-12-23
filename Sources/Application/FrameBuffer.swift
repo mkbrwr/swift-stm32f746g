@@ -5,36 +5,52 @@
 //  Created by Mykhailo Tymchyshyn on 22.12.2024.
 //
 
-// 95K frame buffer for 240x136 at RGB888
+// 127K frame buffer for 480x272 at L8
 struct FrameBuffer {
-    public static let startAddress = 0x20038000
-    public static let endAddress   = 0x20050000
+    public static let layerWidth = 480
+    public static let layerHeight = 272
+    public static let startAddress1 = 0x2003_0200
+    public static let endAddress = 0x2005_0000
 
-    static func fillBuffer(color: Color) {
-        let pointer = UnsafeMutablePointer<(UInt8, UInt8, UInt8)>(bitPattern: startAddress)!
-        for x in 0..<(240*136) {
-            pointer.advanced(by: x).pointee = (UInt8(color.r), UInt8(color.g), UInt8(color.b))
-        }
+    static let displayFrameBuffer = UnsafeMutablePointer<UInt8>(bitPattern: Self.startAddress1)!
+    static let bufferIndices: Range<Int> = 0..<(layerWidth * layerHeight)
+
+    private init() {}
+
+    static func getDisplayFrame() -> UnsafeMutablePointer<UInt8> {
+        displayFrameBuffer
     }
 
     static func draw(color: Color, at point: Point) {
-        let pointer = UnsafeMutablePointer<(UInt8, UInt8, UInt8)>(bitPattern: startAddress)!
-        pointer.advanced(by: point.y * 240 + point.x).pointee = (UInt8(color.r), UInt8(color.g), UInt8(color.b))
+        displayFrameBuffer[point.y * layerWidth + point.x] = color.l
+    }
+
+    static func fillCurrent(_ color: Color) {
+        for idx in bufferIndices {
+            displayFrameBuffer[idx] = color.l
+        }
+    }
+
+    static func eraseCurrent() {
+        for idx in bufferIndices {
+            displayFrameBuffer[idx] = 0x00
+        }
     }
 
     struct Color {
-        var r, g, b: UInt8
+        /// Luminance value
+        var l: UInt8
     }
 }
 
+public extension UInt8 {
+    static let grayShades: [UInt8] = [
+        0, 28, 56, 84, 112, 140, 168, 196, 224, 255
+    ]
 
-let rainbowColors: [(UInt8, UInt8, UInt8)] = [
-    (255, 0, 0),    // Red
-    (255, 127, 0),  // Orange
-    (255, 255, 0),  // Yellow
-    (0, 255, 0),    // Green
-    (0, 0, 255),    // Blue
-    (75, 0, 130),   // Indigo (a compromise, as true indigo is hard to represent digitally)
-    (148, 0, 211)   // Violet
-]
-
+    static let black: UInt8 = grayShades[0]      // 0
+    static let darkGray: UInt8 = grayShades[2]   // 56
+    static let gray: UInt8 = grayShades[4]       // 112
+    static let lightGray: UInt8 = grayShades[7]  // 196
+    static let white: UInt8 = grayShades[9]      // 255
+}

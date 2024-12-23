@@ -5,8 +5,8 @@
 // heap allocate reference types in Swift.
 //
 
-fileprivate let MALLOC_START = 0x20028000
-fileprivate let MALLOC_END   = 0x20038000
+fileprivate let MALLOC_START = 0x2002_8000
+fileprivate let MALLOC_END   = 0x2003_0000
 
 struct SingleCoreAllocator {
   static let shared = SingleCoreAllocator()
