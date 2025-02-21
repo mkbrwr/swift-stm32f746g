@@ -20,13 +20,12 @@ ARCH := armv7em
 TARGET := $(ARCH)-apple-none-macho
 VECTORS_ADDRESS=-0x00200000
 
-SWIFT_BUILD := $(shell xcrun -f swift-build)
 MACHO2BIN := $(TOOLSROOT)/macho2bin.py
 
 .PHONY: build
 build:
 	@echo "compiling..."
-	$(SWIFT_BUILD) \
+	swift build \
 		--configuration release \
 		--verbose \
 		--triple $(TARGET) \

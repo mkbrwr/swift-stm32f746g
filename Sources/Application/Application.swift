@@ -11,12 +11,8 @@ struct Main {
         var board = STM32F746Board()
 
         while true {
-            for color in UInt8.grayShades {
-                FrameBuffer.fillCurrent(.init(l: color))
-                board.moveLayer(to: .init(x: 0, y: 0))
-                board.ledToggle()
-                delay(ms: 42)
-            }
+            board.ledToggle()
+            delay(ms: 42)
         }
     }
 }
