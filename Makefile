@@ -59,6 +59,11 @@ build:
 	$(MACHO2BIN) \
 		$(BUILDROOT)/Application $(BUILDROOT)/Application.bin --base-address 0x20010000 --segments '__TEXT,__DATA,__VECTORS'
 
+.PHONY: run
+run:
+	@echo "programming..."
+	stm32-programmer-cli -c port=SWD -d .build/release/Application.bin 0x08000000 -v -rst
+
 .PHONY: clean
 clean:
 	@echo "cleaning..."
