@@ -10,13 +10,27 @@ let package = Package(
   products: [
     .library(name: "Application", type: .static, targets: ["Application"])
   ],
-  dependencies: [],
+  dependencies: [
+    .package(
+      url: "https://github.com/apple/swift-mmio",
+      branch: "swift-embedded-examples")
+  ],
   targets: [
     .target(
       name: "Application",
       dependencies: [
-        "Support",
-        "Engine"
+        "Engine",
+        "UART",
+        "Support"
+      ],
+      swiftSettings: [
+        .enableExperimentalFeature("Embedded")
+      ]),
+    .target(
+      name: "UART",
+      dependencies: [
+        .product(name: "MMIO", package: "swift-mmio"),
+        "Support"
       ],
       swiftSettings: [
         .enableExperimentalFeature("Embedded")
