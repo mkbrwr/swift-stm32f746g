@@ -68,9 +68,13 @@ public struct UART {
 
   public func write(_ string: String) {
     for character in string.utf8 {
+      write(character)
+    }
+  }
+
+  public func write(_ character: UInt8) {
       tx(value: character)
       waitTxBufferEmpty()
-    }
   }
 }
 

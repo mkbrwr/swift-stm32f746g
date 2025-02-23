@@ -13,3 +13,6 @@ let rcc = RCC(unsafeAddress: 0x4002_3800)
 
 /// Universal synchronous asynchronous receiver transmitter
 let usart1 = USART1(unsafeAddress: 0x4001_1000)
+
+/// Random Number Generator Peripheral
+let rng = RNG(unsafeAddress: 0x5006_0800)

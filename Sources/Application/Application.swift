@@ -12,11 +12,13 @@ struct Main {
     static func main() {
         var board = STM32F746Board()
         let uart = UART()
+        var random = RandomNumberGeneratorPeripheral()
 
         while true {
-            uart.write("Hello!\r\n")
+            uart.write("Hello ");
+            uart.write(UInt8.random(in: 48...57, using: &random))
+            uart.write("\r\n")
             board.ledToggle()
-            delay(ms: 500)
         }
     }
 }
