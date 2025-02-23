@@ -9,8 +9,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import Support
-
 public struct UART {
   public init() {
     configure()
@@ -63,12 +61,6 @@ public struct UART {
       rw.raw.re = 1
       // Enable TX
       rw.raw.te = 1
-    }
-  }
-
-  public func write(_ string: String) {
-    for character in string.utf8 {
-      write(character)
     }
   }
 

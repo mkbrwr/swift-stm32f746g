@@ -8,7 +8,7 @@ let package = Package(
     .macOS(.v14)
   ],
   products: [
-    .library(name: "Application", type: .static, targets: ["Application"])
+    .library(name: "Application", type: .static, targets: ["Game"])
   ],
   dependencies: [
     .package(
@@ -17,46 +17,63 @@ let package = Package(
   ],
   targets: [
     .target(
-      name: "Application",
+      name: "Game",
       dependencies: [
-        "Engine",
-        "UART",
-        "FooBar",
-        "Support"
+        "Board",
+        "Engine"
       ],
       swiftSettings: [
-        .enableExperimentalFeature("Embedded")
+        .enableExperimentalFeature("Embedded"),
+        .unsafeFlags(["-no-allocations"])
       ]),
     .target(
       name: "UART",
       dependencies: [
+        .product(name: "MMIO", package: "swift-mmio")
+      ],
+      swiftSettings: [
+        .enableExperimentalFeature("Embedded")
+      ]),
+    .target(
+      name: "SDRAM",
+      dependencies: [
         .product(name: "MMIO", package: "swift-mmio"),
         "Support"
       ],
       swiftSettings: [
         .enableExperimentalFeature("Embedded")
       ]),
-    .target(
-      name: "FooBar",
+      .target(
+      name: "Board",
       dependencies: [
         .product(name: "MMIO", package: "swift-mmio"),
-        "UART",
-        "Support"
+        "SDRAM"
       ],
       swiftSettings: [
         .enableExperimentalFeature("Embedded")
       ]),
     .target(
       name: "Engine",
-      dependencies: ["Screen"],
+      dependencies: ["RandomNumberGenerator", "Logger"],
       swiftSettings: [
         .enableExperimentalFeature("Embedded")
       ]),
     .target(
-      name: "Screen",
-      dependencies: [],
+      name: "RandomNumberGenerator",
+      dependencies: [
+        .product(name: "MMIO", package: "swift-mmio")
+      ],
       swiftSettings: [
         .enableExperimentalFeature("Embedded")
+      ]),
+    .target(
+      name: "Logger",
+      dependencies: [
+        "UART"
+      ],
+      swiftSettings: [
+        .enableExperimentalFeature("Embedded"),
+        .unsafeFlags(["-no-allocations"])
       ]),
     .target(name: "Support"),
   ])

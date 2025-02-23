@@ -29,7 +29,7 @@ build:
 		--configuration release \
 		--verbose \
 		--triple $(TARGET) \
-		-Xcc -D__APPLE__ -Xcc -D__MACH__ \
+		-Xcc -D__APPLE__ -Xcc -D__MACH__ -Xcc -ffreestanding \
 		-Xswiftc -Xfrontend -Xswiftc -disable-stack-protector
 
 	@echo "linking..."

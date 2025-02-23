@@ -663,7 +663,7 @@ extension STM32F746 {
     ltdc.gcr.ltdcen = 1
   }
 
-    static func setLayer2Position(_ point: Point) {
+  public static func setLayer2Position(_ point: (x: Int, y: Int)) {
         // swift-format-ignore: NeverForceUnwrap
         var ltdc = LTDC(
             baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)

@@ -1,7 +1,7 @@
 import Support
 
-public struct FooBar {
-   public static func foo() {
+public struct SDRAM {
+   public static func initializeSDRAM() {
         // # HAL_SDRAM_Init
         // HAL_SDRAM_MspInit
         rcc.ahb1enr.modify { rw in

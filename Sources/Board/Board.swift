@@ -8,12 +8,13 @@
 // See https://swift.org/LICENSE.txt for license information
 //
 //===----------------------------------------------------------------------===//
+import SDRAM
 
-struct STM32F746Board {
+public struct STM32F746Board {
     var led: LED!
     var button: Button!
 
-    init() {
+    public init() {
         led = LED()
         button = Button()
 
@@ -23,49 +24,27 @@ struct STM32F746Board {
 
         STM32F746.configureLTCD()
 
-        moveLayer(to: .init(x: 0, y: 0))
+        SDRAM.initializeSDRAM()
     }
 
-    mutating func ledOn() {
+    public mutating func ledOn() {
         led.on()
     }
 
-    mutating func ledOff() {
+    public mutating func ledOff() {
         led.off()
     }
 
-    mutating func ledToggle() {
+    public mutating func ledToggle() {
         led.toggle()
     }
 
-    mutating func moveLayer(to point: Point) {
-        STM32F746.setLayer2Position(point)
-    }
-
-    mutating func reloadLayer() {
-        STM32F746.setLayer2Position(Point(x: 120, y: 67))
-    }
-
-    func isButtonPressed() -> Bool {
+    public func isButtonPressed() -> Bool {
         button.isPressed()
     }
 
-    var displaySize: Size {
-        Size(
-            width: STM32F746.LTDCConstants.layerWidth,
-            height: STM32F746.LTDCConstants.layerHeight
-        )
+    public var displaySize: (width: Int, height: Int) {
+        (width: STM32F746.LTDCConstants.layerWidth,
+        height: STM32F746.LTDCConstants.layerHeight)
     }
-}
-
-struct Point {
-    var x, y: Int
-
-    func offset(by: Point) -> Point {
-        Point(x: x + by.x, y: y + by.y)
-    }
-}
-
-struct Size {
-    var width, height: Int
 }

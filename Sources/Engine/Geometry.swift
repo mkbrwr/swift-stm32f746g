@@ -11,7 +11,7 @@ struct Vec2 {
     let x, y: Int
 
     func offset(by: Self) -> Self {
-        Vec2(x: self.x + by.x, y: self.y + by.y)
+        Self(x: self.x + by.x, y: self.y + by.y)
     }
 }
 

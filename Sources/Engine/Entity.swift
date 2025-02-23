@@ -5,7 +5,7 @@
 //  Created by Mykhailo Tymchyshyn on 22.12.2024.
 //
 
-final class Entity {
+struct Entity {
     var position: Vec2
     var direction: Vec2
     let sprite: Sprite
@@ -18,7 +18,10 @@ final class Entity {
 }
 
 extension Entity {
-    func move() {
+    mutating func move() {
         position = position.offset(by: direction)
+    }
+    mutating func changeDirection(_ new: Vec2) {
+        direction = new
     }
 }

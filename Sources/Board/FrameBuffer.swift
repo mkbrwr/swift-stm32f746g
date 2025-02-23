@@ -5,8 +5,8 @@
 //  Created by Mykhailo Tymchyshyn on 22.12.2024.
 //
 
-// 127K frame buffer for 480x272 at L8
-struct FrameBuffer {
+/// 480x272 at ARGB8888
+public struct FrameBuffer {
     public static let layerWidth = 480
     public static let layerHeight = 272
     public static let startAddress1: UInt = 0xC000_0000
@@ -17,40 +17,31 @@ struct FrameBuffer {
 
     private init() {}
 
-    static func getDisplayFrame() -> UnsafeMutablePointer<UInt32> {
+    public static func getDisplayFrame() -> UnsafeMutablePointer<UInt32> {
         displayFrameBuffer
     }
 
-    static func draw(color: Color, at point: Point) {
+    public static func draw(color: Color, at point: (x: Int, y: Int)) {
         displayFrameBuffer[point.y * layerWidth + point.x] = color.argb
     }
 
-    static func fillCurrent(_ color: Color) {
+    public static func fillCurrent(_ color: Color) {
         for idx in bufferIndices {
             displayFrameBuffer[idx] = color.argb
         }
     }
 
-    static func eraseCurrent() {
+    public static func eraseCurrent() {
         for idx in bufferIndices {
             displayFrameBuffer[idx] = 0x00
         }
     }
 
-    struct Color {
-        /// Luminance value
+    public struct Color {
         var argb: UInt32
+
+        public init(argb: UInt32) {
+            self.argb = argb
+        }
     }
-}
-
-public extension UInt8 {
-    static let grayShades: [UInt8] = [
-        0, 28, 56, 84, 112, 140, 168, 196, 224, 255
-    ]
-
-    static let black: UInt8 = grayShades[0]      // 0
-    static let darkGray: UInt8 = grayShades[2]   // 56
-    static let gray: UInt8 = grayShades[4]       // 112
-    static let lightGray: UInt8 = grayShades[7]  // 196
-    static let white: UInt8 = grayShades[9]      // 255
 }

@@ -1,3 +1,4 @@
+/*
 // This hasnt been robustly tested for all alignments but is a simple malloc heap implementation that
 // is roughly based upon the K&R reference examples; it has a few caveats - namely it is not suitable
 // for systems with more than one core and provides no thread local affinities nor does it have any
@@ -5,8 +6,8 @@
 // heap allocate reference types in Swift.
 //
 
-fileprivate let MALLOC_START = 0x2002_8000
-fileprivate let MALLOC_END   = 0x2003_0000
+fileprivate let MALLOC_START = 0x2003_0000
+fileprivate let MALLOC_END   = 0x2005_0000
 
 struct SingleCoreAllocator {
   static let shared = SingleCoreAllocator()
@@ -250,3 +251,4 @@ public func posix_memalign(_ ptr: UnsafeMutablePointer<UnsafeMutableRawPointer?>
   ptr.pointee = newPtr
   return 0
 }
+*/
