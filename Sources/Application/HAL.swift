@@ -405,7 +405,7 @@ extension STM32F746 {
     static let vbp = 2
     static let vfp = 2
 
-    static let pixelSize = 1
+    static let pixelSize = 4
 
     static let displayWidth = 480
     static let displayHeight = 272
@@ -426,10 +426,11 @@ extension STM32F746 {
     rcc.pllcfgr.pllm0 = 1
     rcc.pllcfgr.pllm3 = 1
     rcc.pllcfgr.pllm4 = 1
-    rcc.pllcfgr.plln4 = 1
-    rcc.pllcfgr.plln5 = 1
-    rcc.pllcfgr.plln7 = 1
-    rcc.pllcfgr.plln8 = 1
+    // Change PLLN from 432 to 400 (bits set for binary 400 = 110010000)
+    rcc.pllcfgr.plln4 = 0    // changed from 1 to 0
+    rcc.pllcfgr.plln5 = 1    // unchanged
+    rcc.pllcfgr.plln7 = 1    // unchanged
+    rcc.pllcfgr.plln8 = 1    // unchanged
     rcc.pllcfgr.pllsrc = 1
 
     rcc.cr.pllon = 1
@@ -646,7 +647,7 @@ extension STM32F746 {
 
     ltdc.bccr.rawValue = 0x00_11_11_11  // background color
 
-    ltdc.l2pfcr.rawValue = 5  // L8
+    ltdc.l2pfcr.rawValue = 0
     ltdc.l2cfbar.rawValue = UInt32(FrameBuffer.startAddress1)
     ltdc.l2cacr.consta = 255
     ltdc.l2bfcr.bf1 = 5

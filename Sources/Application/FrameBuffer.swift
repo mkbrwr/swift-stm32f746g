@@ -9,25 +9,25 @@
 struct FrameBuffer {
     public static let layerWidth = 480
     public static let layerHeight = 272
-    public static let startAddress1 = 0x2003_0200
-    public static let endAddress = 0x2005_0000
+    public static let startAddress1: UInt = 0xC000_0000
+    public static let endAddress: UInt = 0xC07F_8000
 
-    static let displayFrameBuffer = UnsafeMutablePointer<UInt8>(bitPattern: Self.startAddress1)!
+    static let displayFrameBuffer = UnsafeMutablePointer<UInt32>(bitPattern: Self.startAddress1)!
     static let bufferIndices: Range<Int> = 0..<(layerWidth * layerHeight)
 
     private init() {}
 
-    static func getDisplayFrame() -> UnsafeMutablePointer<UInt8> {
+    static func getDisplayFrame() -> UnsafeMutablePointer<UInt32> {
         displayFrameBuffer
     }
 
     static func draw(color: Color, at point: Point) {
-        displayFrameBuffer[point.y * layerWidth + point.x] = color.l
+        displayFrameBuffer[point.y * layerWidth + point.x] = color.argb
     }
 
     static func fillCurrent(_ color: Color) {
         for idx in bufferIndices {
-            displayFrameBuffer[idx] = color.l
+            displayFrameBuffer[idx] = color.argb
         }
     }
 
@@ -39,7 +39,7 @@ struct FrameBuffer {
 
     struct Color {
         /// Luminance value
-        var l: UInt8
+        var argb: UInt32
     }
 }
 

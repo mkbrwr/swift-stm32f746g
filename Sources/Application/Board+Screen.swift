@@ -12,7 +12,7 @@ extension STM32F746Board: Screen {
         (width: 480, height: 272)
     }
 
-    func draw(_ color: UInt8, at: (Int, Int)) {
-        FrameBuffer.draw(color: .init(l: color), at: .init(x: at.0, y: at.1))
+    func draw(_ color: UInt32, at: (Int, Int)) {
+        FrameBuffer.draw(color: .init(argb: color), at: .init(x: at.0, y: at.1))
     }
 }

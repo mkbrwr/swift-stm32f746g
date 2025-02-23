@@ -54,7 +54,7 @@ public struct UART {
 
     // Configure UART1
     // Set the baud rate to 216Mhz
-    usart1.brr.modify { $0.raw.storage = 216_000_000 / 115200 }
+    usart1.brr.modify { $0.raw.storage = 200_000_000 / 115200 }
 
     usart1.cr1.modify { rw in
       // Enable USART 1

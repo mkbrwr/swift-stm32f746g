@@ -21,6 +21,7 @@ let package = Package(
       dependencies: [
         "Engine",
         "UART",
+        "FooBar",
         "Support"
       ],
       swiftSettings: [
@@ -30,6 +31,16 @@ let package = Package(
       name: "UART",
       dependencies: [
         .product(name: "MMIO", package: "swift-mmio"),
+        "Support"
+      ],
+      swiftSettings: [
+        .enableExperimentalFeature("Embedded")
+      ]),
+    .target(
+      name: "FooBar",
+      dependencies: [
+        .product(name: "MMIO", package: "swift-mmio"),
+        "UART",
         "Support"
       ],
       swiftSettings: [
