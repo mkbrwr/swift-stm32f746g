@@ -22,9 +22,9 @@ void interrupt(void) {
     while (1) {}
 }
 
-__attribute((used)) __attribute((section("__VECTORS,__text")))
+__attribute((used, section(".vectors")))
 void *vector_table[114] = {
-    (void *)0x2000fffc, // initial SP
+    (void *)0x20001ffc, // initial SP, assume we have 8 KB of SRAM
     reset, // Reset
 
     interrupt, // NMI
@@ -32,6 +32,6 @@ void *vector_table[114] = {
     interrupt, // MemManage
     interrupt, // BusFault
     interrupt, // UsageFault
-    
+
     0 // NULL for all the other handlers
 };

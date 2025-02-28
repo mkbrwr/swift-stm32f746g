@@ -28,24 +28,11 @@ void *memcpy(void *restrict dst, const void *restrict src, size_t n) {
   return dst;
 }
 
-extern void reset(void);
-
-void interrupt(void) {
-  while (1) {}
+void __aeabi_memclr(void *dest, size_t n) {
+    unsigned char *pdest = (unsigned char *)dest;
+    while (n--) {
+        *pdest++ = 0;
+    }
 }
-
-__attribute((used)) __attribute((section("__VECTORS,__text")))
-void *vector_table[114] = {
-  (void *)0x2000fffc, // initial SP
-  (void *)((uintptr_t)reset - (0x20010000 - 0x08000000)), // Reset
-
-  (void *)((uintptr_t)interrupt - (0x20010000 - 0x08000000)), // NMI
-  (void *)((uintptr_t)interrupt - (0x20010000 - 0x08000000)), // HardFault
-  (void *)((uintptr_t)interrupt - (0x20010000 - 0x08000000)), // MemManage
-  (void *)((uintptr_t)interrupt - (0x20010000 - 0x08000000)), // BusFault
-  (void *)((uintptr_t)interrupt - (0x20010000 - 0x08000000)), // UsageFault
-
-  0 // NULL for all the other handlers
-};
 
 #endif
