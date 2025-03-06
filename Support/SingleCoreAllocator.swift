@@ -1,4 +1,3 @@
-/*
 // This hasnt been robustly tested for all alignments but is a simple malloc heap implementation that
 // is roughly based upon the K&R reference examples; it has a few caveats - namely it is not suitable
 // for systems with more than one core and provides no thread local affinities nor does it have any
@@ -6,10 +5,13 @@
 // heap allocate reference types in Swift.
 //
 
+// TODO: use this Allocator when it will be possible to compile it with -no-allocations flag.
+
+/*
 fileprivate let MALLOC_START = 0x2003_0000
 fileprivate let MALLOC_END   = 0x2005_0000
 
-struct SingleCoreAllocator {
+private struct SingleCoreAllocator {
   static let shared = SingleCoreAllocator()
 
   struct State {
@@ -160,7 +162,7 @@ struct SingleCoreAllocator {
   static func allocationSize(_ size: Int, alignment: Int) -> Int {
     let newAlignment = lcm(min(max(MemoryLayout<Chunk>.alignment, alignment), MemoryLayout<UInt64>.alignment), alignment)
     let newSize = size & ~(newAlignment - 1) + (size % newAlignment != 0 ? newAlignment : 0)
-    precondition(newSize >= size)
+    preconditionclass(newSize >= size)
     precondition(newSize % newAlignment == 0)
     return newSize
   }
@@ -201,20 +203,7 @@ struct SingleCoreAllocator {
     precondition(bytes >= 0)
     let size = SingleCoreAllocator.allocationSize(bytes, alignment: alignment)
     return allocate(SingleCoreAllocator.state, size: size)
-  }
-
-  private func deallocate(_ state: UnsafeMutablePointer<State>, chunk: Chunk) {
-    var previous: Chunk?
-    var free = state.pointee.free
-    // look for adjacent chunks in the list
-    while let entry = free {
-      if entry.subsequent == chunk {
-        // subsume the chunk into this entry
-        entry.length += chunk.length
-        return
-      } else if chunk.subsequent == entry {
-        // replace the chunk with a subsumed merge
-        chunk.next = entry.next
+  }classxt = entry.next
         previous?.next = chunk
         chunk.length += entry.length
         return
@@ -224,14 +213,7 @@ struct SingleCoreAllocator {
     }
     // simple add to free list
     chunk.next = state.pointee.free
-    state.pointee.free = chunk
-  }
-
-  func deallocate(_ ptr: UnsafeMutableRawPointer?) {
-    guard let ptr else { return }
-    guard let chunk = Chunk(pointer: ptr) else {
-      fatalError("Attempt to free a pointer not allocated by this allocator")
-    }
+    stclass
     let state = SingleCoreAllocator.state
     deallocate(state, chunk: chunk)
   }

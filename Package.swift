@@ -23,8 +23,7 @@ let package = Package(
         "Engine"
       ],
       swiftSettings: [
-        .enableExperimentalFeature("Embedded"),
-        .unsafeFlags(["-no-allocations"])
+        .enableExperimentalFeature("Embedded")
       ]),
     .target(
       name: "UART",
@@ -32,7 +31,8 @@ let package = Package(
         .product(name: "MMIO", package: "swift-mmio")
       ],
       swiftSettings: [
-        .enableExperimentalFeature("Embedded")
+        .enableExperimentalFeature("Embedded"),
+        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
       ]),
     .target(
       name: "SDRAM",
@@ -41,7 +41,8 @@ let package = Package(
         "Support"
       ],
       swiftSettings: [
-        .enableExperimentalFeature("Embedded")
+        .enableExperimentalFeature("Embedded"),
+        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
       ]),
       .target(
       name: "Board",
@@ -50,13 +51,15 @@ let package = Package(
         "SDRAM"
       ],
       swiftSettings: [
-        .enableExperimentalFeature("Embedded")
+        .enableExperimentalFeature("Embedded"),
+        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
       ]),
     .target(
       name: "Engine",
       dependencies: ["RandomNumberGenerator", "Logger"],
       swiftSettings: [
-        .enableExperimentalFeature("Embedded")
+        .enableExperimentalFeature("Embedded"),
+        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
       ]),
     .target(
       name: "RandomNumberGenerator",
@@ -64,7 +67,8 @@ let package = Package(
         .product(name: "MMIO", package: "swift-mmio")
       ],
       swiftSettings: [
-        .enableExperimentalFeature("Embedded")
+        .enableExperimentalFeature("Embedded"),
+        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
       ]),
     .target(
       name: "Logger",
@@ -73,7 +77,8 @@ let package = Package(
       ],
       swiftSettings: [
         .enableExperimentalFeature("Embedded"),
-        .unsafeFlags(["-no-allocations"])
+        .unsafeFlags(["-no-allocations",
+        "-Xfrontend", "-emit-empty-object-file"])
       ]),
     .target(name: "Support"),
   ])

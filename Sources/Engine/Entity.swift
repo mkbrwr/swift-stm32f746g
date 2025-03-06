@@ -21,7 +21,16 @@ extension Entity {
     mutating func move() {
         position = position.offset(by: direction)
     }
+    
     mutating func changeDirection(_ new: Vec2) {
         direction = new
+    }
+    
+    mutating func reverseXDirection() {
+        direction = Vec2(x: -direction.x, y: direction.y)
+    }
+    
+    mutating func reverseYDirection() {
+        direction = Vec2(x: direction.x, y: -direction.y)
     }
 }

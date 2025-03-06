@@ -24,7 +24,7 @@ void interrupt(void) {
 
 __attribute((used, section(".vectors")))
 void *vector_table[114] = {
-    (void *)0x20001ffc, // initial SP, assume we have 8 KB of SRAM
+    (void *)0x20050000,
     reset, // Reset
 
     interrupt, // NMI

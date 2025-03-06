@@ -19,7 +19,7 @@ struct Game {
             // engine.receive(inputs: [])
             engine.update()
             engine.draw(on: screen)
-            delay(ms: 16)
+            delay(ms: 1)
         }
     }
 }
