@@ -675,6 +675,7 @@ extension STM32F746 {
         ((LTDCConstants.layerHeight + LTDCConstants.vsync + LTDCConstants.vbp - 1
           + point.y) << 16) | (LTDCConstants.vsync + LTDCConstants.vbp + point.y)
         ltdc.l2wvpcr.rawValue = UInt32(j)
+        ltdc.l2cfbar.rawValue = UInt32(FrameBuffer.shared.frontBufferAddress)
         ltdc.srcr.vbr = 1 // reload
     }
 }
