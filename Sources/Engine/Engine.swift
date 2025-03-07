@@ -5,64 +5,34 @@
 //  Created by Mykhailo Tymchyshyn on 22.12.2024.
 //
 
-import RandomNumberGenerator
-import Logger
+import UART
 
 public protocol Screen {
     func draw(_ color: UInt32, at: (Int, Int))
     func reloadScreen()
     var  size: (width: Int, height: Int) { get }
 }
+
 public struct Engine {
     var entities: [Entity]
-    private var screenSize: (width: Int, height: Int) = (480, 272) // Default size, will be updated
+    private var screenSize: (width: Int, height: Int) = (480, 272)
 
     public init() {
         entities = [
             Entity(
-                position: .init(x: 200, y: 200),
+                position: .init(x: 100, y: 100),
                 direction: .init(x: 3, y: 1),
                 sprite: .init(size: .init(width: 10, height: 40), color: (0xffff0000))
             ),
             Entity(
                 position: .init(x: 50, y: 50),
                 direction: .init(x: 2, y: 3),
-                sprite: .init(size: .init(width: 15, height: 15), color: (0xff00ff00))
+                sprite: .init(size: .init(width: 60, height: 60), color: (0xff00ff00))
             ),
             Entity(
                 position: .init(x: 300, y: 150),
                 direction: .init(x: -2, y: -1),
-                sprite: .init(size: .init(width: 20, height: 20), color: (0xff0000ff))
-            ),
-            Entity(
-                position: .init(x: 400, y: 250),
-                direction: .init(x: -1, y: -3),
-                sprite: .init(size: .init(width: 25, height: 25), color: (0xffffff00))
-            ),
-            Entity(
-                position: .init(x: 150, y: 200),
-                direction: .init(x: 2, y: -2),
-                sprite: .init(size: .init(width: 12, height: 12), color: (0xffff8800))
-            ),
-            Entity(
-                position: .init(x: 350, y: 100),
-                direction: .init(x: -3, y: 2),
-                sprite: .init(size: .init(width: 18, height: 30), color: (0xff00ffff))
-            ),
-            Entity(
-                position: .init(x: 250, y: 150),
-                direction: .init(x: 1, y: -2),
-                sprite: .init(size: .init(width: 8, height: 35), color: (0xffff00aa))
-            ),
-            Entity(
-                position: .init(x: 75, y: 220),
-                direction: .init(x: -1, y: -1),
-                sprite: .init(size: .init(width: 22, height: 22), color: (0xff88ff88))
-            ),
-            Entity(
-                position: .init(x: 420, y: 180),
-                direction: .init(x: -2, y: 2),
-                sprite: .init(size: .init(width: 15, height: 15), color: (0xffaa55ff))
+                sprite: .init(size: .init(width: 80, height: 80), color: (0xff0000ff))
             )
         ]
     }

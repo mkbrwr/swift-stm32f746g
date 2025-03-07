@@ -26,15 +26,6 @@ let package = Package(
         .enableExperimentalFeature("Embedded")
       ]),
     .target(
-      name: "UART",
-      dependencies: [
-        .product(name: "MMIO", package: "swift-mmio")
-      ],
-      swiftSettings: [
-        .enableExperimentalFeature("Embedded"),
-        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
-      ]),
-    .target(
       name: "SDRAM",
       dependencies: [
         .product(name: "MMIO", package: "swift-mmio"),
@@ -44,7 +35,7 @@ let package = Package(
         .enableExperimentalFeature("Embedded"),
         .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
       ]),
-      .target(
+    .target(
       name: "Board",
       dependencies: [
         .product(name: "MMIO", package: "swift-mmio"),
@@ -56,29 +47,19 @@ let package = Package(
       ]),
     .target(
       name: "Engine",
-      dependencies: ["RandomNumberGenerator", "Logger"],
+      dependencies: ["UART"],
       swiftSettings: [
         .enableExperimentalFeature("Embedded"),
         .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
       ]),
     .target(
-      name: "RandomNumberGenerator",
+      name: "UART",
       dependencies: [
         .product(name: "MMIO", package: "swift-mmio")
       ],
       swiftSettings: [
         .enableExperimentalFeature("Embedded"),
         .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
-      ]),
-    .target(
-      name: "Logger",
-      dependencies: [
-        "UART"
-      ],
-      swiftSettings: [
-        .enableExperimentalFeature("Embedded"),
-        .unsafeFlags(["-no-allocations",
-        "-Xfrontend", "-emit-empty-object-file"])
       ]),
     .target(name: "Support"),
   ])

@@ -7,18 +7,22 @@
 
 import Board
 import Engine
+import UART
 
 @main
 struct Game {
     static func main() {
         var engine = Engine()
-        let screen = STM32F746Board()
+        var screen = STM32F746Board()
+        let uart = UART()
         engine.start()
 
         while true {
             // engine.receive(inputs: [])
             engine.update()
             engine.draw(on: screen)
+            screen.ledToggle()
+            uart.write(49)
             delay(ms: 1)
         }
     }
