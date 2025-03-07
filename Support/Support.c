@@ -25,7 +25,7 @@ int putchar(int c) {
     return c;
 }
 
-#define HEAP_SIZE (128 * 1024)
+#define HEAP_SIZE (256 * 1024)
 __attribute((used, section(".data")))
 static uint8_t heap[HEAP_SIZE];
 static size_t heap_used = 0;

@@ -22,6 +22,8 @@ public struct FrameBuffer {
     }
 
     public static func draw(color: Color, at point: (x: Int, y: Int)) {
+        guard point.y * layerWidth + point.x < layerWidth * layerHeight else { return }
+        guard point.y * layerWidth + point.x > 0 else { return }
         displayFrameBuffer[point.y * layerWidth + point.x] = color.argb
     }
 
