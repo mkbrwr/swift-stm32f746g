@@ -18,7 +18,9 @@ struct Game {
         engine.start()
 
         while true {
-            // engine.receive(inputs: [])
+            if screen.isButtonPressed() {
+                engine.receive(inputs: [.buttonPress])
+            }
             engine.update()
             engine.draw(on: screen)
             screen.swapBuffers()

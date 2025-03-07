@@ -37,8 +37,20 @@ public struct Engine {
     public func start() {
     }
 
-    // public mutating func receive(inputs: Array<Input>) {
-    // }
+    public mutating func receive(inputs: consuming [Input]) {
+        for input in inputs {
+            switch input {
+                case .buttonPress:
+                    entities.append(
+                        .init(
+                            position: .init(x: 50, y: 50),
+                            direction: .init(x: 2, y: 3),
+                            sprite: .init(size: .init(width: 60, height: 60), color: (0xff00ff00))
+                        )
+                    )
+            }
+        }
+    }
 
     public mutating func update() {
         for i in 0..<entities.count {
