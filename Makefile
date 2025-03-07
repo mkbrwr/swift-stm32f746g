@@ -28,6 +28,14 @@ build:
     .build/release/libApplication.a \
     -o a.elf
 
+.PHONY: flash
+flash:
+	@echo "flashing..."
+	~/ST/bin/STM32_Programmer_CLI -c port=SWD -d a.elf -s
+
+.PHONY: run
+run: build flash
+
 .PHONY: clean
 clean:
 	@echo "cleaning..."
