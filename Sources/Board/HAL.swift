@@ -648,7 +648,7 @@ extension STM32F746 {
     ltdc.bccr.rawValue = 0x00_11_11_11  // background color
 
     ltdc.l2pfcr.rawValue = 0
-    ltdc.l2cfbar.rawValue = UInt32(FrameBuffer.startAddress1)
+    ltdc.l2cfbar.rawValue = UInt32(FrameBuffer.shared.frontBufferAddress)
     ltdc.l2cacr.consta = 255
     ltdc.l2bfcr.bf1 = 5
     ltdc.l2bfcr.bf2 = 4

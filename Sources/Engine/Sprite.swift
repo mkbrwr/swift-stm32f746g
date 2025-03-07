@@ -7,6 +7,6 @@
 
 
 struct Sprite {
-    var size: Size
-    var color: Color
+    let size: Size
+    let color: Color
 }

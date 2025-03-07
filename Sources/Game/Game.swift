@@ -21,7 +21,7 @@ struct Game {
             // engine.receive(inputs: [])
             engine.update()
             engine.draw(on: screen)
-            screen.ledToggle()
+            screen.swapBuffers()
             uart.write(49)
             delay(ms: 1)
         }

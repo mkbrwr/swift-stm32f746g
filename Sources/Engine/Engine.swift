@@ -5,11 +5,8 @@
 //  Created by Mykhailo Tymchyshyn on 22.12.2024.
 //
 
-import UART
-
 public protocol Screen {
     func draw(_ color: UInt32, at: (Int, Int))
-    func reloadScreen()
     var  size: (width: Int, height: Int) { get }
 }
 
@@ -90,7 +87,5 @@ public struct Engine {
                 }
             }
         }
-
-        screen.reloadScreen()
     }
 }

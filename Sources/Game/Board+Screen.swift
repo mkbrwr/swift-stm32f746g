@@ -14,11 +14,11 @@ extension STM32F746Board: Screen {
     }
 
     public func draw(_ color: UInt32, at: (Int, Int)) {
-        FrameBuffer.draw(color: .init(argb: color), at: (x: at.0, y: at.1))
+        FrameBuffer.shared.draw(color: color, at: (x: at.0, y: at.1))
     }
 
-    // tmp
-    public func reloadScreen() {
+    public func swapBuffers() {
+        FrameBuffer.shared.swapBuffers()
         STM32F746.setLayer2Position((0,0))
     }
 }
