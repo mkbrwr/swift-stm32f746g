@@ -114,6 +114,14 @@ extension RCC {
     /// clock control register
     @Register(bitWidth: 32)
     public struct CR {
+        /// PLLSAI ready flag
+        @ReadOnly(bits: 29..<30)
+        public var pllsairdy: PLLSAIRDY
+
+        /// PLLSAI enable
+        @ReadWrite(bits: 28..<29)
+        public var pllsaien: PLLSAIEN
+        
         /// PLLI2S clock ready flag
         @ReadOnly(bits: 27..<28)
         public var plli2srdy: PLLI2SRDY

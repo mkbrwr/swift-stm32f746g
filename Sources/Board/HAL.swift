@@ -10,6 +10,7 @@
 //===----------------------------------------------------------------------===//
 
 import Support
+import Device
 
 public protocol GPIOPlatform {
     associatedtype Pin
@@ -185,7 +186,7 @@ extension AlternateFunction {
     }
 }
 
-// MARK: - GPIOPlatform Conformance
+// MARK: - GPswift-format-ignore: NeverForceUnwrapIOPlatform Conformance
 extension STM32F746: GPIOPlatform {
     public struct Pin {
         var port: GPIOPort
@@ -312,65 +313,111 @@ public enum GPIOPort: Int {
 
 extension STM32F746 {
     public static func enableGPIOPortClock(_ port: GPIOPort) {
-        // swift-format-ignore: NeverForceUnwrap
-        var rcc = RCC(
-            baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4002_3800)!)
-        switch port {
-        case .a: rcc.ahb1enr.gpioaen = 1
-        case .b: rcc.ahb1enr.gpioben = 1
-        case .c: rcc.ahb1enr.gpiocen = 1
-        case .d: rcc.ahb1enr.gpioden = 1
-        case .e: rcc.ahb1enr.gpioeen = 1
-        case .f: rcc.ahb1enr.gpiofen = 1
-        case .g: rcc.ahb1enr.gpiogen = 1
-        case .h: rcc.ahb1enr.gpiohen = 1
-        case .i: rcc.ahb1enr.gpioien = 1
-        case .j: rcc.ahb1enr.gpiojen = 1
-        case .k: rcc.ahb1enr.gpioken = 1
-        }
+      switch port {
+      case .a: rcc.ahb1enr.modify { rw in
+        rw.raw.gpioaen = 1 
+      }
+      case .b: rcc.ahb1enr.modify { rw in
+        rw.raw.gpioben = 1
+      }
+      case .c: rcc.ahb1enr.modify { rw in
+        rw.raw.gpiocen = 1
+      }
+      case .d: rcc.ahb1enr.modify { rw in
+        rw.raw.gpioden = 1
+      }
+      case .e: rcc.ahb1enr.modify { rw in
+        rw.raw.gpioeen = 1
+      }
+      case .f: rcc.ahb1enr.modify { rw in
+        rw.raw.gpiofen = 1
+      }
+      case .g: rcc.ahb1enr.modify { rw in
+        rw.raw.gpiogen = 1
+      }
+      case .h: rcc.ahb1enr.modify { rw in
+        rw.raw.gpiohen = 1
+      }
+      case .i: rcc.ahb1enr.modify { rw in
+        rw.raw.gpioien = 1
+      }
+      case .j: rcc.ahb1enr.modify { rw in
+        rw.raw.gpiojen = 1
+      }
+      case .k: rcc.ahb1enr.modify { rw in
+        rw.raw.gpioken = 1
+      }
+      }
     }
 
   public static func enableUARTClock(_ uartNum: UInt8) {
-    // swift-format-ignore: NeverForceUnwrap
-    var rcc = RCC(
-      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4002_3800)!)
     switch uartNum {
-    case 1: rcc.apb2enr.usart1en = 1
-    case 2: rcc.apb1enr.usart2en = 1
-    case 3: rcc.apb1enr.usart3en = 1
-    case 4: rcc.apb1enr.uart4en = 1
-    case 5: rcc.apb1enr.uart5en = 1
-    case 6: rcc.apb2enr.usart6en = 1
-    case 7: rcc.apb1enr.uart7enr = 1
-    case 8: rcc.apb1enr.uart8enr = 1
+    case 1: rcc.apb2enr.modify { rw in
+      rw.raw.usart1en = 1
+    }
+    case 2: rcc.apb1enr.modify { rw in
+      rw.raw.usart2en = 1
+    }
+    case 3: rcc.apb1enr.modify { rw in
+      rw.raw.usart3en = 1
+    }
+    case 4: rcc.apb1enr.modify { rw in
+      rw.raw.uart4en = 1
+    }
+    case 5: rcc.apb1enr.modify { rw in
+      rw.raw.uart5en = 1
+    }
+    case 6: rcc.apb2enr.modify { rw in
+      rw.raw.usart6en = 1
+    }
+    case 7: rcc.apb1enr.modify { rw in
+      rw.raw.uart7enr = 1
+    }
+    case 8: rcc.apb1enr.modify { rw in
+      rw.raw.uart8enr = 1
+    }
     default: return
     }
   }
 
   public static func enableI2CClock(_ i2cNum: UInt8) {
-    // swift-format-ignore: NeverForceUnwrap
-    var rcc = RCC(
-      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4002_3800)!)
     switch i2cNum {
-    case 1: rcc.apb1enr.i2c1en = 1
-    case 2: rcc.apb1enr.i2c2en = 1
-    case 3: rcc.apb1enr.i2c3en = 1
-    case 4: rcc.apb1enr.i2c4en = 1
+    case 1: rcc.apb1enr.modify { rw in
+      rw.raw.i2c1en = 1
+    }
+    case 2: rcc.apb1enr.modify { rw in
+      rw.raw.i2c2en = 1
+    }
+    case 3: rcc.apb1enr.modify { rw in
+      rw.raw.i2c3en = 1
+    }
+    case 4: rcc.apb1enr.modify { rw in
+      rw.raw.i2c4en = 1
+    }
     default: return
     }
   }
 
   public static func enableSPIClock(_ spiNum: UInt8) {
-    // swift-format-ignore: NeverForceUnwrap
-    var rcc = RCC(
-      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4002_3800)!)
     switch spiNum {
-    case 1: rcc.apb2enr.spi1en = 1
-    case 2: rcc.apb1enr.spi2en = 1
-    case 3: rcc.apb1enr.spi3en = 1
-    case 4: rcc.apb2enr.spi4enr = 1
-    case 5: rcc.apb2enr.spi5enr = 1
-    case 6: rcc.apb2enr.spi6enr = 1
+    case 1: rcc.apb2enr.modify { rw in
+      rw.raw.spi1en = 1
+    }
+    case 2: rcc.apb1enr.modify { rw in
+      rw.raw.spi2en = 1
+    }
+    case 3: rcc.apb1enr.modify { rw in
+      rw.raw.spi3en = 1
+    }
+    case 4: rcc.apb2enr.modify { rw in
+      rw.raw.spi4enr = 1
+    }
+    case 5: rcc.apb2enr.modify { rw in
+      rw.raw.spi5enr = 1
+    }
+    case 6: rcc.apb2enr.modify { rw in
+      rw.raw.spi6enr = 1
+    }
     default: return
     }
   }
@@ -385,16 +432,22 @@ extension STM32F746 {
   }
 
   public static func initializeLTCD() {
-    // swift-format-ignore: NeverForceUnwrap
-    var rcc = RCC(
-      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4002_3800)!)
-    rcc.cfgr.rawValue = 0
-    rcc.cr.hsion = 1
-    rcc.cr.csson = 0
-    rcc.cr.pllon = 0
-    rcc.cr.hsebyp = 0
-    rcc.cr.hseon = 1
-    while rcc.cr.hserdy == 0 {}
+    rcc.cr.modify { _, w in
+      w.raw.hseon = 1
+    }
+    rcc.cr.modify { _, w in 
+      w.raw.csson = 0
+    }
+    rcc.cr.modify { _, w in 
+      w.raw.pllon = 0
+    }
+    rcc.cr.modify { _, w in 
+      w.raw.hsebyp = 0
+    }
+    rcc.cr.modify { _, w in 
+      w.raw.hseon = 1
+    }
+    while rcc.cr.read().raw.hserdy == 0 {}
   }
 
   enum LTDCConstants {
@@ -418,34 +471,59 @@ extension STM32F746 {
     // swift-format-ignore: NeverForceUnwrap
     var ltdc = LTDC(
       baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)
-    // swift-format-ignore: NeverForceUnwrap
-    var rcc = RCC(
-      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4002_3800)!)
 
-    rcc.pllcfgr.rawValue = 0
-    rcc.pllcfgr.pllm0 = 1
-    rcc.pllcfgr.pllm3 = 1
-    rcc.pllcfgr.pllm4 = 1
-    // Change PLLN from 432 to 400 (bits set for binary 400 = 110010000)
-    rcc.pllcfgr.plln4 = 0    // changed from 1 to 0
-    rcc.pllcfgr.plln5 = 1    // unchanged
-    rcc.pllcfgr.plln7 = 1    // unchanged
-    rcc.pllcfgr.plln8 = 1    // unchanged
-    rcc.pllcfgr.pllsrc = 1
+    rcc.pllcfgr.write(.init(.init(0)))
+    rcc.pllcfgr.modify { rw in
+      rw.raw.pllm0 = 1
+    }
+    rcc.pllcfgr.modify { rw in
+      rw.raw.pllm3 = 1
+    }
+    rcc.pllcfgr.modify { rw in
+      rw.raw.pllm4 = 1
+    }
+    rcc.pllcfgr.modify { rw in
+      rw.raw.plln4 = 0
+    }
+    rcc.pllcfgr.modify { rw in
+      rw.raw.plln5 = 1
+    }
+    rcc.pllcfgr.modify { rw in
+      rw.raw.plln7 = 1
+    }
+    rcc.pllcfgr.modify { rw in
+      rw.raw.plln8 = 1
+    }
+    rcc.pllcfgr.modify { rw in
+      rw.raw.pllsrc = 1
+    }
 
-    rcc.cr.pllon = 1
-    while rcc.cr.pllrdy == 0 {}
+    rcc.cr.modify { _, w in
+      w.raw.pllon = 1
+    }
+    while rcc.cr.read().raw.pllrdy == 0 {}
 
-    rcc.cfgr.rawValue &= 0b11
-    rcc.cfgr.rawValue |= 0b10
-    while rcc.cfgr.rawValue & 0b1100 != 0b1000 {}
+    rcc.cfgr.modify { r, w in
+      w.raw.sw0 = 0
+      w.raw.sw1 = 1
+    }
+    
+    while rcc.cfgr.read().raw.sws0 != 0 && rcc.cfgr.read().raw.sws1 != 1 {}
 
-    rcc.pllsaicfgr.pllsain = 192
-    rcc.pllsaicfgr.pllsair = 5
-    rcc.dkcfgr1.pllsaidivr = 1
+    rcc.pllsaicfgr.modify { rw in
+      rw.raw.pllsain = 192
+    }
+    rcc.pllsaicfgr.modify { rw in
+      rw.raw.pllsair = 5
+    }
+    rcc.dkcfgr1.modify { rw in
+      rw.raw.pllsaidivr = 1
+    }
 
-    rcc.cr.pllsaion = 1
-    while rcc.cr.pllsairdy == 0 {}
+    rcc.cr.modify { _, w in
+      w.raw.pllsaien = 1
+    }
+    while rcc.cr.read().raw.pllsairdy == 0 {}
 
     STM32F746.enableGPIOPortClock(.i)
 
@@ -627,7 +705,10 @@ extension STM32F746 {
 
     lcdDispPin.assert()
     backlightPin.assert()
-    rcc.apb2enr.ltdcen = 1
+    
+    rcc.apb2enr.modify { rw in
+      rw.raw.ltdcen = 1
+    }
 
     ltdc.sscr.vsh = UInt16(LTDCConstants.vsync - 1)
     ltdc.sscr.hsw = UInt16(LTDCConstants.hsync - 1)

@@ -45,7 +45,7 @@ public struct Engine {
                         .init(
                             position: .init(x: 50, y: 50),
                             direction: .init(x: 2, y: 3),
-                            sprite: .init(size: .init(width: 60, height: 60), color: (0xff00ff00))
+                            sprite: .init(size: .init(width: 60, height: 60), color: (0xfff00ff))
                         )
                     )
             }
