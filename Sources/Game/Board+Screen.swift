@@ -19,6 +19,6 @@ extension STM32F746Board: Screen {
 
     public func swapBuffers() {
         FrameBuffer.shared.swapBuffers()
-        STM32F746.setLayer2Position((0,0))
+        STM32F746.reloadScreen()
     }
 }

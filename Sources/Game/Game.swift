@@ -25,7 +25,6 @@ struct Game {
             engine.draw(on: screen)
             screen.swapBuffers()
             uart.write(49)
-            delay(ms: 1)
         }
     }
 }

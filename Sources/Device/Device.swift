@@ -2,6 +2,9 @@
 
 import MMIO
 
+/// LCD-TFT Controller
+nonisolated(unsafe) public let ltdc = LTDC(unsafeAddress: 0x40016800)
+
 /// Flexible memory controller
 nonisolated(unsafe) public let fmc = FMC(unsafeAddress: 0xa0000000)
 

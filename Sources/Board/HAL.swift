@@ -468,9 +468,6 @@ extension STM32F746 {
   }
 
   public static func configureLTCD() {
-    // swift-format-ignore: NeverForceUnwrap
-    var ltdc = LTDC(
-      baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)
 
     rcc.pllcfgr.write(.init(.init(0)))
     rcc.pllcfgr.modify { rw in
@@ -507,7 +504,7 @@ extension STM32F746 {
       w.raw.sw0 = 0
       w.raw.sw1 = 1
     }
-    
+
     while rcc.cfgr.read().raw.sws0 != 0 && rcc.cfgr.read().raw.sws1 != 1 {}
 
     rcc.pllsaicfgr.modify { rw in
@@ -710,53 +707,88 @@ extension STM32F746 {
       rw.raw.ltdcen = 1
     }
 
-    ltdc.sscr.vsh = UInt16(LTDCConstants.vsync - 1)
-    ltdc.sscr.hsw = UInt16(LTDCConstants.hsync - 1)
-    ltdc.bpcr.ahbp = UInt16(LTDCConstants.hsync + LTDCConstants.hbp - 1)
-    ltdc.bpcr.avbp = UInt16(LTDCConstants.vsync + LTDCConstants.vbp - 1)
-    ltdc.awcr.aah = UInt16(
+    ltdc.sscr.modify { rw in
+      rw.raw.vsh = UInt32(LTDCConstants.vsync - 1)
+      rw.raw.hsw = UInt32(LTDCConstants.hsync - 1)
+    }
+    
+    ltdc.bpcr.modify { rw in
+      rw.raw.ahbp = UInt32(LTDCConstants.hsync + LTDCConstants.hbp - 1)
+      rw.raw.avbp = UInt32(LTDCConstants.vsync + LTDCConstants.vbp - 1)
+    }
+    
+    ltdc.awcr.modify { rw in
+      rw.raw.aah = UInt32(
       LTDCConstants.displayHeight + LTDCConstants.vsync + LTDCConstants.vbp - 1
     )
-    ltdc.awcr.aav = UInt16(
+      rw.raw.aav = UInt32(
       LTDCConstants.displayWidth + LTDCConstants.hsync + LTDCConstants.hbp - 1)
-    ltdc.twcr.totalw = UInt16(
+    }
+    
+    ltdc.twcr.modify { rw in
+      rw.raw .totalw = UInt32(
       LTDCConstants.displayWidth + LTDCConstants.hsync + LTDCConstants.hbp
         + LTDCConstants.hfp - 1)
-    ltdc.twcr.totalh = UInt16(
+      rw.raw.totalh = UInt32(
       LTDCConstants.displayHeight + LTDCConstants.vsync + LTDCConstants.vbp
         + LTDCConstants.vfp - 1)
+    }
 
-    ltdc.bccr.rawValue = 0x00_11_11_11  // background color
+    ltdc.bccr.modify { rw in
+      rw.raw.bc = 0x00_11_11_11  // background color
+    }
 
-    ltdc.l2pfcr.rawValue = 0
-    ltdc.l2cfbar.rawValue = UInt32(FrameBuffer.shared.frontBufferAddress)
-    ltdc.l2cacr.consta = 255
-    ltdc.l2bfcr.bf1 = 5
-    ltdc.l2bfcr.bf2 = 4
-    ltdc.l2cfblr.rawValue =
-    UInt32(UInt32(LTDCConstants.pixelSize * LTDCConstants.layerWidth) << 16)
-    | UInt32(LTDCConstants.pixelSize * LTDCConstants.layerWidth + 3)
-    ltdc.l2cfblnr.cfblnbr = UInt16(LTDCConstants.layerHeight)
-    ltdc.l2cr.len = 1
+    ltdc.l2pfcr.modify { rw in
+      rw.raw.pf = 0
+    }
+    ltdc.l2cfbar.modify { rw in
+      rw.raw.cfbadd = UInt32(FrameBuffer.shared.frontBufferAddress)
+    }
+    ltdc.l2cacr.modify { rw in
+      rw.raw.consta = 255
+    }
+    ltdc.l2bfcr.modify { rw in
+      rw.raw.bf1 = 5
+      rw.raw.bf2 = 4 
+    }
+    ltdc.l2cfblr.modify { rw in
+      rw.raw.cfbp = UInt32(LTDCConstants.pixelSize * LTDCConstants.layerWidth)
+      rw.raw.cfbll = UInt32(LTDCConstants.pixelSize * LTDCConstants.layerWidth + 3)
+    }
+    ltdc.l2cfblnr.modify { rw in
+      rw.raw.cfblnbr = UInt32(LTDCConstants.layerHeight)
+    }
 
-    ltdc.srcr.vbr = 1  // reload
+    ltdc.l2cr.modify { rw in
+      rw.raw.len = 1
+    }
 
-    ltdc.gcr.ltdcen = 1
+    ltdc.l2whpcr.modify { rw in
+      rw.raw.whsppos = UInt32(LTDCConstants.layerWidth + LTDCConstants.hbp + LTDCConstants.hsync - 1 + 0)
+      rw.raw.whstpos = UInt32(LTDCConstants.hbp + LTDCConstants.hsync + 0)
+    }
+
+    ltdc.l2wvpcr.modify { rw in
+      rw.raw.wvsppos = UInt32(LTDCConstants.layerHeight + LTDCConstants.vsync + LTDCConstants.vbp - 1 + 0)
+      rw.raw.wvstpos = UInt32(LTDCConstants.vsync + LTDCConstants.vbp + 0)
+    }
+
+    ltdc.l2cfbar.modify { rw in
+      rw.raw.cfbadd = UInt32(FrameBuffer.shared.frontBufferAddress)
+    }
+
+    ltdc.gcr.modify { _, w in
+      w.raw.ltdcen = 1
+    }
   }
 
-  public static func setLayer2Position(_ point: (x: Int, y: Int)) {
-        // swift-format-ignore: NeverForceUnwrap
-        var ltdc = LTDC(
-            baseAddress: UnsafeMutableRawPointer(bitPattern: 0x4001_6800)!)
-        let i: Int =
-        ((LTDCConstants.layerWidth + LTDCConstants.hbp + LTDCConstants.hsync - 1
-          + point.x) << 16) | (LTDCConstants.hbp + LTDCConstants.hsync + point.x)
-        ltdc.l2whpcr.rawValue = UInt32(i)
-        let j: Int =
-        ((LTDCConstants.layerHeight + LTDCConstants.vsync + LTDCConstants.vbp - 1
-          + point.y) << 16) | (LTDCConstants.vsync + LTDCConstants.vbp + point.y)
-        ltdc.l2wvpcr.rawValue = UInt32(j)
-        ltdc.l2cfbar.rawValue = UInt32(FrameBuffer.shared.frontBufferAddress)
-        ltdc.srcr.vbr = 1 // reload
+  public static func reloadScreen() {
+    ltdc.l2cfbar.modify { rw in
+      rw.raw.cfbadd = UInt32(FrameBuffer.shared.frontBufferAddress)
     }
+    while ltdc.cdsr.read().raw.vsyncs != 1 {}
+    ltdc.srcr.modify { rw in
+      rw.raw.imr = 1 // reload
+    }
+  }
 }
