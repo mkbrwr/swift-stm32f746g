@@ -1,9 +1,0 @@
-{
-  "swiftPM": {
-    "configuration": "release",
-    "triple": "armv7em-none-none-eabi",
-    "swiftCompilerFlags": ["-Xfrontend", "-disable-stack-protector"]
-  },
-  "backgroundIndexing": true,
-  "backgroundPreparationMode": "enabled"
-}
