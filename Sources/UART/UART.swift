@@ -9,6 +9,8 @@
 //
 //===----------------------------------------------------------------------===//
 
+import Device
+
 public struct UART {
   public init() {
     configure()
@@ -32,7 +34,7 @@ public struct UART {
     // Put Pin A9 into push pull
     gpioa.otyper.modify { $0.raw.ot9 = 0b0 }
     // Put Pin A9 into low speed
-    gpioa.ospeedr.modify { $0.raw.ospeedr9 = 0b00 }
+    gpioa.gpiob_ospeedr.modify { $0.raw.ospeedr9 = 0b00 }
     // Disable pull up/down on Pin A9
     gpioa.pupdr.modify { $0.raw.pupdr9 = 0b00 }
     // Set alternate function usart1 on Pin A9
@@ -44,7 +46,7 @@ public struct UART {
     // Put Pin B7 into push pull
     gpiob.otyper.modify { $0.raw.ot7 = 0b0 }
     // Put Pin B7 into low speed
-    gpiob.ospeedr.modify { $0.raw.ospeedr7 = 0b00 }
+    gpiob.gpiob_ospeedr.modify { $0.raw.ospeedr7 = 0b00 }
     // Disable pull up/down on Pin B7
     gpiob.pupdr.modify { $0.raw.pupdr7 = 0b00 }
     // Set alternate function usart1 on Pin B7

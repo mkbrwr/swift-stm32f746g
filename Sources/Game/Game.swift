@@ -13,7 +13,7 @@ import UART
 struct Game {
     static func main() {
         var engine = Engine()
-        var screen = STM32F746Board()
+        let screen = STM32F746Board()
         let uart = UART()
         engine.start()
 

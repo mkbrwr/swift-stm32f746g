@@ -4,902 +4,902 @@ import MMIO
 
 /// Flexible memory controller
 @RegisterBlock
-struct FMC {
+public struct FMC {
     /// SRAM/NOR-Flash chip-select control register 1
     @RegisterBlock(offset: 0x0)
-    var bcr1: Register<BCR1>
+    public var bcr1: Register<BCR1>
 
     /// SRAM/NOR-Flash chip-select timing register 1
     @RegisterBlock(offset: 0x4)
-    var btr1: Register<BTR1>
+    public var btr1: Register<BTR1>
 
     /// SRAM/NOR-Flash chip-select control register 2
     @RegisterBlock(offset: 0x8)
-    var bcr2: Register<BCR2>
+    public var bcr2: Register<BCR2>
 
     /// SRAM/NOR-Flash chip-select timing register 2
     @RegisterBlock(offset: 0xc)
-    var btr2: Register<BTR2>
+    public var btr2: Register<BTR2>
 
     /// SRAM/NOR-Flash chip-select control register 3
     @RegisterBlock(offset: 0x10)
-    var bcr3: Register<BCR3>
+    public var bcr3: Register<BCR3>
 
     /// SRAM/NOR-Flash chip-select timing register 3
     @RegisterBlock(offset: 0x14)
-    var btr3: Register<BTR3>
+    public var btr3: Register<BTR3>
 
     /// SRAM/NOR-Flash chip-select control register 4
     @RegisterBlock(offset: 0x18)
-    var bcr4: Register<BCR4>
+    public var bcr4: Register<BCR4>
 
     /// SRAM/NOR-Flash chip-select timing register 4
     @RegisterBlock(offset: 0x1c)
-    var btr4: Register<BTR4>
+    public var btr4: Register<BTR4>
 
     /// PC Card/NAND Flash control register
     @RegisterBlock(offset: 0x80)
-    var pcr: Register<PCR>
+    public var pcr: Register<PCR>
 
     /// FIFO status and interrupt register
     @RegisterBlock(offset: 0x84)
-    var sr: Register<SR>
+    public var sr: Register<SR>
 
     /// Common memory space timing register
     @RegisterBlock(offset: 0x88)
-    var pmem: Register<PMEM>
+    public var pmem: Register<PMEM>
 
     /// Attribute memory space timing register
     @RegisterBlock(offset: 0x8c)
-    var patt: Register<PATT>
+    public var patt: Register<PATT>
 
     /// ECC result register
     @RegisterBlock(offset: 0x94)
-    var eccr: Register<ECCR>
+    public var eccr: Register<ECCR>
 
     /// SRAM/NOR-Flash write timing registers 1
     @RegisterBlock(offset: 0x104)
-    var bwtr1: Register<BWTR1>
+    public var bwtr1: Register<BWTR1>
 
     /// SRAM/NOR-Flash write timing registers 2
     @RegisterBlock(offset: 0x10c)
-    var bwtr2: Register<BWTR2>
+    public var bwtr2: Register<BWTR2>
 
     /// SRAM/NOR-Flash write timing registers 3
     @RegisterBlock(offset: 0x114)
-    var bwtr3: Register<BWTR3>
+    public var bwtr3: Register<BWTR3>
 
     /// SRAM/NOR-Flash write timing registers 4
     @RegisterBlock(offset: 0x11c)
-    var bwtr4: Register<BWTR4>
+    public var bwtr4: Register<BWTR4>
 
     /// SDRAM Control Register 1
     @RegisterBlock(offset: 0x140)
-    var sdcr1: Register<SDCR1>
+    public var sdcr1: Register<SDCR1>
 
     /// SDRAM Control Register 2
     @RegisterBlock(offset: 0x144)
-    var sdcr2: Register<SDCR2>
+    public var sdcr2: Register<SDCR2>
 
     /// SDRAM Timing register 1
     @RegisterBlock(offset: 0x148)
-    var sdtr1: Register<SDTR1>
+    public var sdtr1: Register<SDTR1>
 
     /// SDRAM Timing register 2
     @RegisterBlock(offset: 0x14c)
-    var sdtr2: Register<SDTR2>
+    public var sdtr2: Register<SDTR2>
 
     /// SDRAM Command Mode register
     @RegisterBlock(offset: 0x150)
-    var sdcmr: Register<SDCMR>
+    public var sdcmr: Register<SDCMR>
 
     /// SDRAM Refresh Timer register
     @RegisterBlock(offset: 0x154)
-    var sdrtr: Register<SDRTR>
+    public var sdrtr: Register<SDRTR>
 
     /// SDRAM Status register
     @RegisterBlock(offset: 0x158)
-    var sdsr: Register<SDSR>
+    public var sdsr: Register<SDSR>
 }
 
 extension FMC {
     /// SRAM/NOR-Flash chip-select control register 1
     @Register(bitWidth: 32)
-    struct BCR1 {
+    public struct BCR1 {
         /// CCLKEN
         @ReadWrite(bits: 20..<21)
-        var cclken: CCLKEN
+        public var cclken: CCLKEN
 
         /// CBURSTRW
         @ReadWrite(bits: 19..<20)
-        var cburstrw: CBURSTRW
+        public var cburstrw: CBURSTRW
 
         /// ASYNCWAIT
         @ReadWrite(bits: 15..<16)
-        var asyncwait: ASYNCWAIT
+        public var asyncwait: ASYNCWAIT
 
         /// EXTMOD
         @ReadWrite(bits: 14..<15)
-        var extmod: EXTMOD
+        public var extmod: EXTMOD
 
         /// WAITEN
         @ReadWrite(bits: 13..<14)
-        var waiten: WAITEN
+        public var waiten: WAITEN
 
         /// WREN
         @ReadWrite(bits: 12..<13)
-        var wren: WREN
+        public var wren: WREN
 
         /// WAITCFG
         @ReadWrite(bits: 11..<12)
-        var waitcfg: WAITCFG
+        public var waitcfg: WAITCFG
 
         /// WAITPOL
         @ReadWrite(bits: 9..<10)
-        var waitpol: WAITPOL
+        public var waitpol: WAITPOL
 
         /// BURSTEN
         @ReadWrite(bits: 8..<9)
-        var bursten: BURSTEN
+        public var bursten: BURSTEN
 
         /// FACCEN
         @ReadWrite(bits: 6..<7)
-        var faccen: FACCEN
+        public var faccen: FACCEN
 
         /// MWID
         @ReadWrite(bits: 4..<6)
-        var mwid: MWID
+        public var mwid: MWID
 
         /// MTYP
         @ReadWrite(bits: 2..<4)
-        var mtyp: MTYP
+        public var mtyp: MTYP
 
         /// MUXEN
         @ReadWrite(bits: 1..<2)
-        var muxen: MUXEN
+        public var muxen: MUXEN
 
         /// MBKEN
         @ReadWrite(bits: 0..<1)
-        var mbken: MBKEN
+        public var mbken: MBKEN
     }
 
     /// SRAM/NOR-Flash chip-select timing register 1
     @Register(bitWidth: 32)
-    struct BTR1 {
+    public struct BTR1 {
         /// ACCMOD
         @ReadWrite(bits: 28..<30)
-        var accmod: ACCMOD
+        public var accmod: ACCMOD
 
         /// DATLAT
         @ReadWrite(bits: 24..<28)
-        var datlat: DATLAT
+        public var datlat: DATLAT
 
         /// CLKDIV
         @ReadWrite(bits: 20..<24)
-        var clkdiv: CLKDIV
+        public var clkdiv: CLKDIV
 
         /// BUSTURN
         @ReadWrite(bits: 16..<20)
-        var busturn: BUSTURN
+        public var busturn: BUSTURN
 
         /// DATAST
         @ReadWrite(bits: 8..<16)
-        var datast: DATAST
+        public var datast: DATAST
 
         /// ADDHLD
         @ReadWrite(bits: 4..<8)
-        var addhld: ADDHLD
+        public var addhld: ADDHLD
 
         /// ADDSET
         @ReadWrite(bits: 0..<4)
-        var addset: ADDSET
+        public var addset: ADDSET
     }
 
     /// SRAM/NOR-Flash chip-select control register 2
     @Register(bitWidth: 32)
-    struct BCR2 {
+    public struct BCR2 {
         /// CBURSTRW
         @ReadWrite(bits: 19..<20)
-        var cburstrw: CBURSTRW
+        public var cburstrw: CBURSTRW
 
         /// ASYNCWAIT
         @ReadWrite(bits: 15..<16)
-        var asyncwait: ASYNCWAIT
+        public var asyncwait: ASYNCWAIT
 
         /// EXTMOD
         @ReadWrite(bits: 14..<15)
-        var extmod: EXTMOD
+        public var extmod: EXTMOD
 
         /// WAITEN
         @ReadWrite(bits: 13..<14)
-        var waiten: WAITEN
+        public var waiten: WAITEN
 
         /// WREN
         @ReadWrite(bits: 12..<13)
-        var wren: WREN
+        public var wren: WREN
 
         /// WAITCFG
         @ReadWrite(bits: 11..<12)
-        var waitcfg: WAITCFG
+        public var waitcfg: WAITCFG
 
         /// WRAPMOD
         @ReadWrite(bits: 10..<11)
-        var wrapmod: WRAPMOD
+        public var wrapmod: WRAPMOD
 
         /// WAITPOL
         @ReadWrite(bits: 9..<10)
-        var waitpol: WAITPOL
+        public var waitpol: WAITPOL
 
         /// BURSTEN
         @ReadWrite(bits: 8..<9)
-        var bursten: BURSTEN
+        public var bursten: BURSTEN
 
         /// FACCEN
         @ReadWrite(bits: 6..<7)
-        var faccen: FACCEN
+        public var faccen: FACCEN
 
         /// MWID
         @ReadWrite(bits: 4..<6)
-        var mwid: MWID
+        public var mwid: MWID
 
         /// MTYP
         @ReadWrite(bits: 2..<4)
-        var mtyp: MTYP
+        public var mtyp: MTYP
 
         /// MUXEN
         @ReadWrite(bits: 1..<2)
-        var muxen: MUXEN
+        public var muxen: MUXEN
 
         /// MBKEN
         @ReadWrite(bits: 0..<1)
-        var mbken: MBKEN
+        public var mbken: MBKEN
     }
 
     /// SRAM/NOR-Flash chip-select timing register 2
     @Register(bitWidth: 32)
-    struct BTR2 {
+    public struct BTR2 {
         /// ACCMOD
         @ReadWrite(bits: 28..<30)
-        var accmod: ACCMOD
+        public var accmod: ACCMOD
 
         /// DATLAT
         @ReadWrite(bits: 24..<28)
-        var datlat: DATLAT
+        public var datlat: DATLAT
 
         /// CLKDIV
         @ReadWrite(bits: 20..<24)
-        var clkdiv: CLKDIV
+        public var clkdiv: CLKDIV
 
         /// BUSTURN
         @ReadWrite(bits: 16..<20)
-        var busturn: BUSTURN
+        public var busturn: BUSTURN
 
         /// DATAST
         @ReadWrite(bits: 8..<16)
-        var datast: DATAST
+        public var datast: DATAST
 
         /// ADDHLD
         @ReadWrite(bits: 4..<8)
-        var addhld: ADDHLD
+        public var addhld: ADDHLD
 
         /// ADDSET
         @ReadWrite(bits: 0..<4)
-        var addset: ADDSET
+        public var addset: ADDSET
     }
 
     /// SRAM/NOR-Flash chip-select control register 3
     @Register(bitWidth: 32)
-    struct BCR3 {
+    public struct BCR3 {
         /// CBURSTRW
         @ReadWrite(bits: 19..<20)
-        var cburstrw: CBURSTRW
+        public var cburstrw: CBURSTRW
 
         /// ASYNCWAIT
         @ReadWrite(bits: 15..<16)
-        var asyncwait: ASYNCWAIT
+        public var asyncwait: ASYNCWAIT
 
         /// EXTMOD
         @ReadWrite(bits: 14..<15)
-        var extmod: EXTMOD
+        public var extmod: EXTMOD
 
         /// WAITEN
         @ReadWrite(bits: 13..<14)
-        var waiten: WAITEN
+        public var waiten: WAITEN
 
         /// WREN
         @ReadWrite(bits: 12..<13)
-        var wren: WREN
+        public var wren: WREN
 
         /// WAITCFG
         @ReadWrite(bits: 11..<12)
-        var waitcfg: WAITCFG
+        public var waitcfg: WAITCFG
 
         /// WRAPMOD
         @ReadWrite(bits: 10..<11)
-        var wrapmod: WRAPMOD
+        public var wrapmod: WRAPMOD
 
         /// WAITPOL
         @ReadWrite(bits: 9..<10)
-        var waitpol: WAITPOL
+        public var waitpol: WAITPOL
 
         /// BURSTEN
         @ReadWrite(bits: 8..<9)
-        var bursten: BURSTEN
+        public var bursten: BURSTEN
 
         /// FACCEN
         @ReadWrite(bits: 6..<7)
-        var faccen: FACCEN
+        public var faccen: FACCEN
 
         /// MWID
         @ReadWrite(bits: 4..<6)
-        var mwid: MWID
+        public var mwid: MWID
 
         /// MTYP
         @ReadWrite(bits: 2..<4)
-        var mtyp: MTYP
+        public var mtyp: MTYP
 
         /// MUXEN
         @ReadWrite(bits: 1..<2)
-        var muxen: MUXEN
+        public var muxen: MUXEN
 
         /// MBKEN
         @ReadWrite(bits: 0..<1)
-        var mbken: MBKEN
+        public var mbken: MBKEN
     }
 
     /// SRAM/NOR-Flash chip-select timing register 3
     @Register(bitWidth: 32)
-    struct BTR3 {
+    public struct BTR3 {
         /// ACCMOD
         @ReadWrite(bits: 28..<30)
-        var accmod: ACCMOD
+        public var accmod: ACCMOD
 
         /// DATLAT
         @ReadWrite(bits: 24..<28)
-        var datlat: DATLAT
+        public var datlat: DATLAT
 
         /// CLKDIV
         @ReadWrite(bits: 20..<24)
-        var clkdiv: CLKDIV
+        public var clkdiv: CLKDIV
 
         /// BUSTURN
         @ReadWrite(bits: 16..<20)
-        var busturn: BUSTURN
+        public var busturn: BUSTURN
 
         /// DATAST
         @ReadWrite(bits: 8..<16)
-        var datast: DATAST
+        public var datast: DATAST
 
         /// ADDHLD
         @ReadWrite(bits: 4..<8)
-        var addhld: ADDHLD
+        public var addhld: ADDHLD
 
         /// ADDSET
         @ReadWrite(bits: 0..<4)
-        var addset: ADDSET
+        public var addset: ADDSET
     }
 
     /// SRAM/NOR-Flash chip-select control register 4
     @Register(bitWidth: 32)
-    struct BCR4 {
+    public struct BCR4 {
         /// CBURSTRW
         @ReadWrite(bits: 19..<20)
-        var cburstrw: CBURSTRW
+        public var cburstrw: CBURSTRW
 
         /// ASYNCWAIT
         @ReadWrite(bits: 15..<16)
-        var asyncwait: ASYNCWAIT
+        public var asyncwait: ASYNCWAIT
 
         /// EXTMOD
         @ReadWrite(bits: 14..<15)
-        var extmod: EXTMOD
+        public var extmod: EXTMOD
 
         /// WAITEN
         @ReadWrite(bits: 13..<14)
-        var waiten: WAITEN
+        public var waiten: WAITEN
 
         /// WREN
         @ReadWrite(bits: 12..<13)
-        var wren: WREN
+        public var wren: WREN
 
         /// WAITCFG
         @ReadWrite(bits: 11..<12)
-        var waitcfg: WAITCFG
+        public var waitcfg: WAITCFG
 
         /// WRAPMOD
         @ReadWrite(bits: 10..<11)
-        var wrapmod: WRAPMOD
+        public var wrapmod: WRAPMOD
 
         /// WAITPOL
         @ReadWrite(bits: 9..<10)
-        var waitpol: WAITPOL
+        public var waitpol: WAITPOL
 
         /// BURSTEN
         @ReadWrite(bits: 8..<9)
-        var bursten: BURSTEN
+        public var bursten: BURSTEN
 
         /// FACCEN
         @ReadWrite(bits: 6..<7)
-        var faccen: FACCEN
+        public var faccen: FACCEN
 
         /// MWID
         @ReadWrite(bits: 4..<6)
-        var mwid: MWID
+        public var mwid: MWID
 
         /// MTYP
         @ReadWrite(bits: 2..<4)
-        var mtyp: MTYP
+        public var mtyp: MTYP
 
         /// MUXEN
         @ReadWrite(bits: 1..<2)
-        var muxen: MUXEN
+        public var muxen: MUXEN
 
         /// MBKEN
         @ReadWrite(bits: 0..<1)
-        var mbken: MBKEN
+        public var mbken: MBKEN
     }
 
     /// SRAM/NOR-Flash chip-select timing register 4
     @Register(bitWidth: 32)
-    struct BTR4 {
+    public struct BTR4 {
         /// ACCMOD
         @ReadWrite(bits: 28..<30)
-        var accmod: ACCMOD
+        public var accmod: ACCMOD
 
         /// DATLAT
         @ReadWrite(bits: 24..<28)
-        var datlat: DATLAT
+        public var datlat: DATLAT
 
         /// CLKDIV
         @ReadWrite(bits: 20..<24)
-        var clkdiv: CLKDIV
+        public var clkdiv: CLKDIV
 
         /// BUSTURN
         @ReadWrite(bits: 16..<20)
-        var busturn: BUSTURN
+        public var busturn: BUSTURN
 
         /// DATAST
         @ReadWrite(bits: 8..<16)
-        var datast: DATAST
+        public var datast: DATAST
 
         /// ADDHLD
         @ReadWrite(bits: 4..<8)
-        var addhld: ADDHLD
+        public var addhld: ADDHLD
 
         /// ADDSET
         @ReadWrite(bits: 0..<4)
-        var addset: ADDSET
+        public var addset: ADDSET
     }
 
     /// PC Card/NAND Flash control register
     @Register(bitWidth: 32)
-    struct PCR {
+    public struct PCR {
         /// ECCPS
         @ReadWrite(bits: 17..<20)
-        var eccps: ECCPS
+        public var eccps: ECCPS
 
         /// TAR
         @ReadWrite(bits: 13..<17)
-        var tar: TAR
+        public var tar: TAR
 
         /// TCLR
         @ReadWrite(bits: 9..<13)
-        var tclr: TCLR
+        public var tclr: TCLR
 
         /// ECCEN
         @ReadWrite(bits: 6..<7)
-        var eccen: ECCEN
+        public var eccen: ECCEN
 
         /// PWID
         @ReadWrite(bits: 4..<6)
-        var pwid: PWID
+        public var pwid: PWID
 
         /// PTYP
         @ReadWrite(bits: 3..<4)
-        var ptyp: PTYP
+        public var ptyp: PTYP
 
         /// PBKEN
         @ReadWrite(bits: 2..<3)
-        var pbken: PBKEN
+        public var pbken: PBKEN
 
         /// PWAITEN
         @ReadWrite(bits: 1..<2)
-        var pwaiten: PWAITEN
+        public var pwaiten: PWAITEN
     }
 
     /// FIFO status and interrupt register
     @Register(bitWidth: 32)
-    struct SR {
+    public struct SR {
         /// FEMPT
         @ReadOnly(bits: 6..<7)
-        var fempt: FEMPT
+        public var fempt: FEMPT
 
         /// IFEN
         @ReadWrite(bits: 5..<6)
-        var ifen: IFEN
+        public var ifen: IFEN
 
         /// ILEN
         @ReadWrite(bits: 4..<5)
-        var ilen: ILEN
+        public var ilen: ILEN
 
         /// IREN
         @ReadWrite(bits: 3..<4)
-        var iren: IREN
+        public var iren: IREN
 
         /// IFS
         @ReadWrite(bits: 2..<3)
-        var ifs: IFS
+        public var ifs: IFS
 
         /// ILS
         @ReadWrite(bits: 1..<2)
-        var ils: ILS
+        public var ils: ILS
 
         /// IRS
         @ReadWrite(bits: 0..<1)
-        var irs: IRS
+        public var irs: IRS
     }
 
     /// Common memory space timing register
     @Register(bitWidth: 32)
-    struct PMEM {
+    public struct PMEM {
         /// MEMHIZx
         @ReadWrite(bits: 24..<32)
-        var memhizx: MEMHIZx
+        public var memhizx: MEMHIZx
 
         /// MEMHOLDx
         @ReadWrite(bits: 16..<24)
-        var memholdx: MEMHOLDx
+        public var memholdx: MEMHOLDx
 
         /// MEMWAITx
         @ReadWrite(bits: 8..<16)
-        var memwaitx: MEMWAITx
+        public var memwaitx: MEMWAITx
 
         /// MEMSETx
         @ReadWrite(bits: 0..<8)
-        var memsetx: MEMSETx
+        public var memsetx: MEMSETx
     }
 
     /// Attribute memory space timing register
     @Register(bitWidth: 32)
-    struct PATT {
+    public struct PATT {
         /// ATTHIZx
         @ReadWrite(bits: 24..<32)
-        var atthizx: ATTHIZx
+        public var atthizx: ATTHIZx
 
         /// ATTHOLDx
         @ReadWrite(bits: 16..<24)
-        var attholdx: ATTHOLDx
+        public var attholdx: ATTHOLDx
 
         /// ATTWAITx
         @ReadWrite(bits: 8..<16)
-        var attwaitx: ATTWAITx
+        public var attwaitx: ATTWAITx
 
         /// ATTSETx
         @ReadWrite(bits: 0..<8)
-        var attsetx: ATTSETx
+        public var attsetx: ATTSETx
     }
 
     /// ECC result register
     @Register(bitWidth: 32)
-    struct ECCR {
+    public struct ECCR {
         /// ECCx
         @ReadOnly(bits: 0..<32)
-        var eccx: ECCx
+        public var eccx: ECCx
     }
 
     /// SRAM/NOR-Flash write timing registers 1
     @Register(bitWidth: 32)
-    struct BWTR1 {
+    public struct BWTR1 {
         /// ACCMOD
         @ReadWrite(bits: 28..<30)
-        var accmod: ACCMOD
+        public var accmod: ACCMOD
 
         /// DATLAT
         @ReadWrite(bits: 24..<28)
-        var datlat: DATLAT
+        public var datlat: DATLAT
 
         /// CLKDIV
         @ReadWrite(bits: 20..<24)
-        var clkdiv: CLKDIV
+        public var clkdiv: CLKDIV
 
         /// DATAST
         @ReadWrite(bits: 8..<16)
-        var datast: DATAST
+        public var datast: DATAST
 
         /// ADDHLD
         @ReadWrite(bits: 4..<8)
-        var addhld: ADDHLD
+        public var addhld: ADDHLD
 
         /// ADDSET
         @ReadWrite(bits: 0..<4)
-        var addset: ADDSET
+        public var addset: ADDSET
     }
 
     /// SRAM/NOR-Flash write timing registers 2
     @Register(bitWidth: 32)
-    struct BWTR2 {
+    public struct BWTR2 {
         /// ACCMOD
         @ReadWrite(bits: 28..<30)
-        var accmod: ACCMOD
+        public var accmod: ACCMOD
 
         /// DATLAT
         @ReadWrite(bits: 24..<28)
-        var datlat: DATLAT
+        public var datlat: DATLAT
 
         /// CLKDIV
         @ReadWrite(bits: 20..<24)
-        var clkdiv: CLKDIV
+        public var clkdiv: CLKDIV
 
         /// DATAST
         @ReadWrite(bits: 8..<16)
-        var datast: DATAST
+        public var datast: DATAST
 
         /// ADDHLD
         @ReadWrite(bits: 4..<8)
-        var addhld: ADDHLD
+        public var addhld: ADDHLD
 
         /// ADDSET
         @ReadWrite(bits: 0..<4)
-        var addset: ADDSET
+        public var addset: ADDSET
     }
 
     /// SRAM/NOR-Flash write timing registers 3
     @Register(bitWidth: 32)
-    struct BWTR3 {
+    public struct BWTR3 {
         /// ACCMOD
         @ReadWrite(bits: 28..<30)
-        var accmod: ACCMOD
+        public var accmod: ACCMOD
 
         /// DATLAT
         @ReadWrite(bits: 24..<28)
-        var datlat: DATLAT
+        public var datlat: DATLAT
 
         /// CLKDIV
         @ReadWrite(bits: 20..<24)
-        var clkdiv: CLKDIV
+        public var clkdiv: CLKDIV
 
         /// DATAST
         @ReadWrite(bits: 8..<16)
-        var datast: DATAST
+        public var datast: DATAST
 
         /// ADDHLD
         @ReadWrite(bits: 4..<8)
-        var addhld: ADDHLD
+        public var addhld: ADDHLD
 
         /// ADDSET
         @ReadWrite(bits: 0..<4)
-        var addset: ADDSET
+        public var addset: ADDSET
     }
 
     /// SRAM/NOR-Flash write timing registers 4
     @Register(bitWidth: 32)
-    struct BWTR4 {
+    public struct BWTR4 {
         /// ACCMOD
         @ReadWrite(bits: 28..<30)
-        var accmod: ACCMOD
+        public var accmod: ACCMOD
 
         /// DATLAT
         @ReadWrite(bits: 24..<28)
-        var datlat: DATLAT
+        public var datlat: DATLAT
 
         /// CLKDIV
         @ReadWrite(bits: 20..<24)
-        var clkdiv: CLKDIV
+        public var clkdiv: CLKDIV
 
         /// DATAST
         @ReadWrite(bits: 8..<16)
-        var datast: DATAST
+        public var datast: DATAST
 
         /// ADDHLD
         @ReadWrite(bits: 4..<8)
-        var addhld: ADDHLD
+        public var addhld: ADDHLD
 
         /// ADDSET
         @ReadWrite(bits: 0..<4)
-        var addset: ADDSET
+        public var addset: ADDSET
     }
 
     /// SDRAM Control Register 1
     @Register(bitWidth: 32)
-    struct SDCR1 {
+    public struct SDCR1 {
         /// Number of column address bits
         @ReadWrite(bits: 0..<2)
-        var nc: NC
+        public var nc: NC
 
         /// Number of row address bits
         @ReadWrite(bits: 2..<4)
-        var nr: NR
+        public var nr: NR
 
         /// Memory data bus width
         @ReadWrite(bits: 4..<6)
-        var mwid: MWID
+        public var mwid: MWID
 
         /// Number of internal banks
         @ReadWrite(bits: 6..<7)
-        var nb: NB
+        public var nb: NB
 
         /// CAS latency
         @ReadWrite(bits: 7..<9)
-        var cas: CAS
+        public var cas: CAS
 
         /// Write protection
         @ReadWrite(bits: 9..<10)
-        var wp: WP
+        public var wp: WP
 
         /// SDRAM clock configuration
         @ReadWrite(bits: 10..<12)
-        var sdclk: SDCLK
+        public var sdclk: SDCLK
 
         /// Burst read
         @ReadWrite(bits: 12..<13)
-        var rburst: RBURST
+        public var rburst: RBURST
 
         /// Read pipe
         @ReadWrite(bits: 13..<15)
-        var rpipe: RPIPE
+        public var rpipe: RPIPE
     }
 
     /// SDRAM Control Register 2
     @Register(bitWidth: 32)
-    struct SDCR2 {
+    public struct SDCR2 {
         /// Number of column address bits
         @ReadWrite(bits: 0..<2)
-        var nc: NC
+        public var nc: NC
 
         /// Number of row address bits
         @ReadWrite(bits: 2..<4)
-        var nr: NR
+        public var nr: NR
 
         /// Memory data bus width
         @ReadWrite(bits: 4..<6)
-        var mwid: MWID
+        public var mwid: MWID
 
         /// Number of internal banks
         @ReadWrite(bits: 6..<7)
-        var nb: NB
+        public var nb: NB
 
         /// CAS latency
         @ReadWrite(bits: 7..<9)
-        var cas: CAS
+        public var cas: CAS
 
         /// Write protection
         @ReadWrite(bits: 9..<10)
-        var wp: WP
+        public var wp: WP
 
         /// SDRAM clock configuration
         @ReadWrite(bits: 10..<12)
-        var sdclk: SDCLK
+        public var sdclk: SDCLK
 
         /// Burst read
         @ReadWrite(bits: 12..<13)
-        var rburst: RBURST
+        public var rburst: RBURST
 
         /// Read pipe
         @ReadWrite(bits: 13..<15)
-        var rpipe: RPIPE
+        public var rpipe: RPIPE
     }
 
     /// SDRAM Timing register 1
     @Register(bitWidth: 32)
-    struct SDTR1 {
+    public struct SDTR1 {
         /// Load Mode Register to Active
         @ReadWrite(bits: 0..<4)
-        var tmrd: TMRD
+        public var tmrd: TMRD
 
         /// Exit self-refresh delay
         @ReadWrite(bits: 4..<8)
-        var txsr: TXSR
+        public var txsr: TXSR
 
         /// Self refresh time
         @ReadWrite(bits: 8..<12)
-        var tras: TRAS
+        public var tras: TRAS
 
         /// Row cycle delay
         @ReadWrite(bits: 12..<16)
-        var trc: TRC
+        public var trc: TRC
 
         /// Recovery delay
         @ReadWrite(bits: 16..<20)
-        var twr: TWR
+        public var twr: TWR
 
         /// Row precharge delay
         @ReadWrite(bits: 20..<24)
-        var trp: TRP
+        public var trp: TRP
 
         /// Row to column delay
         @ReadWrite(bits: 24..<28)
-        var trcd: TRCD
+        public var trcd: TRCD
     }
 
     /// SDRAM Timing register 2
     @Register(bitWidth: 32)
-    struct SDTR2 {
+    public struct SDTR2 {
         /// Load Mode Register to Active
         @ReadWrite(bits: 0..<4)
-        var tmrd: TMRD
+        public var tmrd: TMRD
 
         /// Exit self-refresh delay
         @ReadWrite(bits: 4..<8)
-        var txsr: TXSR
+        public var txsr: TXSR
 
         /// Self refresh time
         @ReadWrite(bits: 8..<12)
-        var tras: TRAS
+        public var tras: TRAS
 
         /// Row cycle delay
         @ReadWrite(bits: 12..<16)
-        var trc: TRC
+        public var trc: TRC
 
         /// Recovery delay
         @ReadWrite(bits: 16..<20)
-        var twr: TWR
+        public var twr: TWR
 
         /// Row precharge delay
         @ReadWrite(bits: 20..<24)
-        var trp: TRP
+        public var trp: TRP
 
         /// Row to column delay
         @ReadWrite(bits: 24..<28)
-        var trcd: TRCD
+        public var trcd: TRCD
     }
 
     /// SDRAM Command Mode register
     @Register(bitWidth: 32)
-    struct SDCMR {
+    public struct SDCMR {
         /// Command mode
         @WriteOnly(bits: 0..<3)
-        var mode: MODE
+        public var mode: MODE
 
         /// Command target bank 2
         @WriteOnly(bits: 3..<4)
-        var ctb2: CTB2
+        public var ctb2: CTB2
 
         /// Command target bank 1
         @WriteOnly(bits: 4..<5)
-        var ctb1: CTB1
+        public var ctb1: CTB1
 
         /// Number of Auto-refresh
         @ReadWrite(bits: 5..<9)
-        var nrfs: NRFS
+        public var nrfs: NRFS
 
         /// Mode Register definition
         @ReadWrite(bits: 9..<22)
-        var mrd: MRD
+        public var mrd: MRD
     }
 
     /// SDRAM Refresh Timer register
     @Register(bitWidth: 32)
-    struct SDRTR {
+    public struct SDRTR {
         /// Clear Refresh error flag
         @WriteOnly(bits: 0..<1)
-        var cre: CRE
+        public var cre: CRE
 
         /// Refresh Timer Count
         @ReadWrite(bits: 1..<14)
-        var count: COUNT
+        public var count: COUNT
 
         /// RES Interrupt Enable
         @ReadWrite(bits: 14..<15)
-        var reie: REIE
+        public var reie: REIE
     }
 
     /// SDRAM Status register
     @Register(bitWidth: 32)
-    struct SDSR {
+    public struct SDSR {
         /// Refresh error flag
         @ReadOnly(bits: 0..<1)
-        var re: RE
+        public var re: RE
 
         /// Status Mode for Bank 1
         @ReadOnly(bits: 1..<3)
-        var modes1: MODES1
+        public var modes1: MODES1
 
         /// Status Mode for Bank 2
         @ReadOnly(bits: 3..<5)
-        var modes2: MODES2
+        public var modes2: MODES2
 
         /// Busy status
         @ReadOnly(bits: 5..<6)
-        var busy: BUSY
+        public var busy: BUSY
     }
 }

@@ -1,11 +1,11 @@
-// swift-tools-version: 6.1
+// swift-tools-version: 6.1.0
 
 import PackageDescription
 
 let package = Package(
   name: "Swift-STM32F746G",
   platforms: [
-    .macOS(.v14)
+    .macOS("14.0")
   ],
   products: [
     .library(name: "Application", type: .static, targets: ["Game"])
@@ -20,40 +20,48 @@ let package = Package(
       name: "Game",
       dependencies: [
         "Board",
-        "Engine"
+        "Engine",
       ],
       swiftSettings: [
         .enableExperimentalFeature("Embedded")
-      ]),
-    .target(
-      name: "SDRAM",
-      dependencies: [
-        .product(name: "MMIO", package: "swift-mmio"),
-        "Support"
-      ],
-      swiftSettings: [
-        .enableExperimentalFeature("Embedded"),
-        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
-      ]),
-    .target(
-      name: "Board",
-      dependencies: [
-        .product(name: "MMIO", package: "swift-mmio"),
-        "SDRAM"
-      ],
-      swiftSettings: [
-        .enableExperimentalFeature("Embedded"),
-        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
       ]),
     .target(
       name: "Engine",
       dependencies: ["UART"],
       swiftSettings: [
         .enableExperimentalFeature("Embedded"),
-        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
+        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"]),
+      ]),
+    .target(
+      name: "Board",
+      dependencies: [
+        "SDRAM",
+      ],
+      swiftSettings: [
+        .enableExperimentalFeature("Embedded"),
+        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"]),
+    ]),
+    .target(
+      name: "SDRAM",
+      dependencies: [
+        "Device",
+        "Support",
+      ],
+      swiftSettings: [
+        .enableExperimentalFeature("Embedded"),
+        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"]),
       ]),
     .target(
       name: "UART",
+      dependencies: [
+        "Device"
+      ],
+      swiftSettings: [
+        .enableExperimentalFeature("Embedded"),
+        .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"]),
+      ]),
+    .target(
+      name: "Device",
       dependencies: [
         .product(name: "MMIO", package: "swift-mmio")
       ],
@@ -61,5 +69,5 @@ let package = Package(
         .enableExperimentalFeature("Embedded"),
         .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"])
       ]),
-    .target(name: "Support"),
+      .target(name: "Support")
   ])

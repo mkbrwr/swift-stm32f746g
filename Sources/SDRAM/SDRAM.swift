@@ -1,4 +1,5 @@
 import Support
+import Device
 
 public struct SDRAM {
    public static func initializeSDRAM() {
@@ -23,7 +24,7 @@ public struct SDRAM {
         gpioc.pupdr.modify { rw in
             rw.raw.pupdr3 = 1  // Pull-up
         }
-        gpioc.ospeedr.modify { rw in
+        gpioc.gpiob_ospeedr.modify { rw in
             rw.raw.ospeedr3 = 2  // Fast speed
         }
         gpioc.afrl.modify { rw in
@@ -39,7 +40,7 @@ public struct SDRAM {
             rw.raw.pupdr0 = 1; rw.raw.pupdr1 = 1; rw.raw.pupdr8 = 1; rw.raw.pupdr9 = 1
             rw.raw.pupdr10 = 1; rw.raw.pupdr14 = 1; rw.raw.pupdr15 = 1
         }
-        gpiod.ospeedr.modify { rw in
+        gpiod.gpiob_ospeedr.modify { rw in
             rw.raw.ospeedr0 = 2; rw.raw.ospeedr1 = 2; rw.raw.ospeedr8 = 2; rw.raw.ospeedr9 = 2
             rw.raw.ospeedr10 = 2; rw.raw.ospeedr14 = 2; rw.raw.ospeedr15 = 2
         }
@@ -62,7 +63,7 @@ public struct SDRAM {
             rw.raw.pupdr10 = 1; rw.raw.pupdr11 = 1; rw.raw.pupdr12 = 1; rw.raw.pupdr13 = 1
             rw.raw.pupdr14 = 1; rw.raw.pupdr15 = 1
         }
-        gpioe.ospeedr.modify { rw in
+        gpioe.gpiob_ospeedr.modify { rw in
             rw.raw.ospeedr0 = 2; rw.raw.ospeedr1 = 2; rw.raw.ospeedr7 = 2; rw.raw.ospeedr8 = 2
             rw.raw.ospeedr9 = 2; rw.raw.ospeedr10 = 2; rw.raw.ospeedr11 = 2; rw.raw.ospeedr12 = 2
             rw.raw.ospeedr13 = 2; rw.raw.ospeedr14 = 2; rw.raw.ospeedr15 = 2
@@ -86,7 +87,7 @@ public struct SDRAM {
             rw.raw.pupdr5 = 1; rw.raw.pupdr11 = 1; rw.raw.pupdr12 = 1; rw.raw.pupdr13 = 1
             rw.raw.pupdr14 = 1; rw.raw.pupdr15 = 1
         }
-        gpiof.ospeedr.modify { rw in
+        gpiof.gpiob_ospeedr.modify { rw in
             rw.raw.ospeedr0 = 2; rw.raw.ospeedr1 = 2; rw.raw.ospeedr2 = 2; rw.raw.ospeedr3 = 2
             rw.raw.ospeedr4 = 2; rw.raw.ospeedr5 = 2; rw.raw.ospeedr11 = 2; rw.raw.ospeedr12 = 2
             rw.raw.ospeedr13 = 2; rw.raw.ospeedr14 = 2; rw.raw.ospeedr15 = 2
@@ -109,7 +110,7 @@ public struct SDRAM {
             rw.raw.pupdr0 = 1; rw.raw.pupdr1 = 1; rw.raw.pupdr4 = 1; rw.raw.pupdr5 = 1
             rw.raw.pupdr8 = 1; rw.raw.pupdr15 = 1
         }
-        gpiog.ospeedr.modify { rw in
+        gpiog.gpiob_ospeedr.modify { rw in
             rw.raw.ospeedr0 = 2; rw.raw.ospeedr1 = 2; rw.raw.ospeedr4 = 2; rw.raw.ospeedr5 = 2
             rw.raw.ospeedr8 = 2; rw.raw.ospeedr15 = 2
         }
@@ -127,7 +128,7 @@ public struct SDRAM {
         gpioh.pupdr.modify { rw in
             rw.raw.pupdr3 = 1; rw.raw.pupdr5 = 1
         }
-        gpioh.ospeedr.modify { rw in
+        gpioh.gpiob_ospeedr.modify { rw in
             rw.raw.ospeedr3 = 2; rw.raw.ospeedr5 = 2
         }
         gpioh.afrl.modify { rw in
