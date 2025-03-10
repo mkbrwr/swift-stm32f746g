@@ -5,10 +5,23 @@
 //  Created by Mykhailo Tymchyshyn on 22.12.2024.
 //
 
-protocol Sprite {
-    associatedtype T: Texture
-    var size: Size { get }
-    var texture: T { get } 
+enum Sprite  {
+    case singleColorSprite(SingleColorSprite)
+    case bufferBackedSprite(BufferBackedSprite)
+
+    var size: Size {
+        switch self {
+            case let .singleColorSprite(sprite): return sprite.size
+            case let .bufferBackedSprite(sprite): return sprite.size
+        }
+    }
+
+    var texture: Texture {
+        switch self {
+            case let .singleColorSprite(sprite): return sprite.texture
+            case let .bufferBackedSprite(sprite): return sprite.texture
+        }
+    }
 }
 
 extension Sprite {
@@ -21,12 +34,21 @@ extension Sprite {
     }
 }
 
-struct SingleColorSprite: Sprite {
+struct SingleColorSprite {
     let size: Size
-    let texture: SingleColorTexture
+    let texture: Texture
 
     init(size: Size, color: Color) {
         self.size = size
-        self.texture = SingleColorTexture(size: size, color: color)
+        self.texture = .singleColorTexture(SingleColorTexture(size: size, color: color))
+    }
+}
+
+struct BufferBackedSprite {
+    let size: Size
+    let texture: Texture
+       init(size: Size, texture: BufferBackedTexture) {
+        self.size = size
+        self.texture = .bufferBackedTexture(texture)   
     }
 }

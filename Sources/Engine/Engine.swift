@@ -6,24 +6,24 @@
 //
 
 public struct Engine {
-    var entities: [Entity<SingleColorSprite>]
+    var entities: [Entity]
 
     public init() {
         entities = [
             Entity(
                 position: .init(x: 100, y: 100),
                 direction: .init(x: 3, y: 1),
-                sprite: SingleColorSprite(size: .init(width: 10, height: 40), color: (0xffff0000))
+                sprite: .singleColorSprite(SingleColorSprite(size: .init(width: 10, height: 40), color: (0xffff0000)))
             ),
             Entity(
                 position: .init(x: 50, y: 50),
                 direction: .init(x: 2, y: 3),
-                sprite: SingleColorSprite(size: .init(width: 60, height: 60), color: (0xff00ff00))
+                sprite: .singleColorSprite(SingleColorSprite(size: .init(width: 60, height: 60), color: (0xff00ff00)))
             ),
             Entity(
                 position: .init(x: 300, y: 150),
                 direction: .init(x: -2, y: -1),
-                sprite: SingleColorSprite(size: .init(width: 80, height: 80), color: (0xff0000ff))
+                sprite: .singleColorSprite(SingleColorSprite(size: .init(width: 80, height: 80), color: (0xff0000ff)))
             )
         ]
     }
@@ -39,7 +39,7 @@ public struct Engine {
                         .init(
                             position: .init(x: 50, y: 50),
                             direction: .init(x: 2, y: 3),
-                            sprite: SingleColorSprite(size: .init(width: 60, height: 60), color: (0xfff00ff))
+                            sprite: .bufferBackedSprite(BufferBackedSprite.init(size: .init(width: 50, height: 50), texture: .init(size: .init(width: 50, height: 50), pixelBuffer: .init(bitPattern: 0x424242)!)))
                         )
                     )
             }
