@@ -5,12 +5,12 @@
 //  Created by Mykhailo Tymchyshyn on 22.12.2024.
 //
 
-struct Entity {
+struct Entity<S: Sprite> {
     var position: Vec2
     var direction: Vec2
-    let sprite: Sprite
+    let sprite: S
 
-    init(position: Vec2, direction: Vec2, sprite: Sprite) {
+    init(position: Vec2, direction: Vec2, sprite: S) {
         self.position = position
         self.direction = direction
         self.sprite = sprite

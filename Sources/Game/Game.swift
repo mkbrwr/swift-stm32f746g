@@ -24,6 +24,7 @@ struct Game {
             engine.update()
             engine.draw(on: screen)
             screen.swapBuffers()
+            screen.clearBackBuffer()
             uart.write(49)
         }
     }
