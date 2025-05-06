@@ -1,4 +1,4 @@
-SWIFT_TOOLCHAIN := ~/Developer/swift-6.1-DEVELOPMENT-SNAPSHOT-2025-03-03-a-debian12/usr/bin
+SWIFT_TOOLCHAIN := ~/.swiftly/bin
 SWIFT := $(SWIFT_TOOLCHAIN)/swift
 SWIFTC := $(SWIFT_TOOLCHAIN)/swiftc
 CLANG := $(SWIFT_TOOLCHAIN)/clang
@@ -31,7 +31,7 @@ build:
 .PHONY: flash
 flash:
 	@echo "flashing..."
-	~/ST/bin/STM32_Programmer_CLI -c port=SWD -d a.elf -s
+    ~/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin/STM32_Programmer_CLI -c port=SWD -d a.elf -s
 
 .PHONY: run
 run: build flash
