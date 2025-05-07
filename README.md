@@ -1,6 +1,9 @@
-# BUILD and FLASH
-make run
+# BUILD 
+make
+
+# FLASH
+make flash
+Or STM32CubeProgrammer GUI can be used
 
 # Result
-https://github.com/user-attachments/assets/6f1d4e1b-f460-48db-8829-7bb6f4e57682
-
+https://github.com/user-attachments/assets/25acaab6-9485-4956-8606-6de5df287f81
