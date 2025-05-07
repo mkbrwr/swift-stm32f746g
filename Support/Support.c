@@ -41,22 +41,22 @@ int posix_memalign(void **memptr, size_t alignment, size_t size) {
     if ((alignment & (alignment - 1)) != 0 || alignment < sizeof(void*)) {
         return 22; // EINVAL
     }
-    
+
     // Calculate aligned address
     size_t padding = alignment - ((uintptr_t)&heap[heap_used] % alignment);
     if (padding == alignment) {
         padding = 0;
     }
-    
+
     // Check if we have enough space
     if (heap_used + padding + size > HEAP_SIZE) {
         return 12; // ENOMEM
     }
-    
+
     // Allocate memory
     heap_used += padding;
     *memptr = &heap[heap_used];
     heap_used += size;
-    
+
     return 0;
 }

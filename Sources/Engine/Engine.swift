@@ -6,66 +6,67 @@
 //
 
 public struct Engine {
-    var entities: [Entity]
+    var cube: [Vec3D]
+    var fov_factor: Float = 640
 
     public init() {
-        entities = [
-            Entity(
-                position: .init(x: 100, y: 100),
-                direction: .init(x: 3, y: 1),
-                sprite: .singleColorSprite(SingleColorSprite(size: .init(width: 10, height: 40), color: (0xffff0000)))
-            ),
-            Entity(
-                position: .init(x: 50, y: 50),
-                direction: .init(x: 2, y: 3),
-                sprite: .singleColorSprite(SingleColorSprite(size: .init(width: 60, height: 60), color: (0xff00ff00)))
-            ),
-            Entity(
-                position: .init(x: 300, y: 150),
-                direction: .init(x: -2, y: -1),
-                sprite: .singleColorSprite(SingleColorSprite(size: .init(width: 80, height: 80), color: (0xff0000ff)))
-            )
-        ]
+        cube = Self.createCube()
+    }
+
+    static func createCube() -> [Vec3D] {
+        let min: Float = -1.0
+        let max: Float = 1.0
+        let step: Float = (max - min) / 8.0
+
+        var points: [Vec3D] = []
+        for i in 0..<9 {
+            let x = min + Float(i) * step
+            for j in 0..<9 {
+                let y = min + Float(j) * step
+                for k in 0..<9 {
+                    let z = min + Float(k) * step
+
+                    points.append(Vec3D(x, y, z))
+                }
+            }
+        }
+        return points
     }
 
     public func start() {
     }
 
     public mutating func receive(inputs: [Input]) {
-        for input in inputs {
-            switch input {
-                case .buttonPress:
-                    entities.append(
-                        .init(
-                            position: .init(x: 50, y: 50),
-                            direction: .init(x: 2, y: 3),
-                            sprite: .bufferBackedSprite(BufferBackedSprite.init(size: .init(width: 50, height: 50), texture: .init(size: .init(width: 50, height: 50), pixelBuffer: .init(bitPattern: 0x424242)!)))
-                        )
-                    )
-            }
-        }
     }
 
     public mutating func update() {
-        let screenSize = (width: 480, height: 272)
-        for i in 0..<entities.count {
-            let entity = entities[i]
-            
-            if entity.position.x <= 0 || entity.position.x + Int(entity.sprite.size.width) >= screenSize.width {
-                entities[i].reverseXDirection()
-            }
-            
-            if entity.position.y <= 0 || entity.position.y + Int(entity.sprite.size.height) >= screenSize.height {
-                entities[i].reverseYDirection()
-            }
-            
-            entities[i].move()
-        }
+    }
+
+    var cubeRotation: Float = 0.0
+    var cameraPosition: Vec3D = .init(x: 0, y: 0, z: -5)
+
+    func project(_ vec3: Vec3D) -> Vec2D {
+        let z = vec3.z - cameraPosition.z
+        return .init(vec3.x * fov_factor / z, vec3.y * fov_factor / z)
     }
 
     public mutating func draw<S: Screen>(on screen: S) {
-        for entity in entities {
-            entity.sprite.draw(on: screen, at: (entity.position.x, entity.position.y))
+        cubeRotation += 0.005
+        for point in cube {
+            let transformedPointa = vec3RotateX(point, angle: cubeRotation)
+            let transformedPointb = vec3RotateY(transformedPointa, angle: cubeRotation)
+            let transformedPoint = vec3RotateZ(transformedPointb, angle: cubeRotation)
+
+            // Translate the points away from the camera
+            let translatedPoint = Vec3D(
+                x: transformedPoint.x, y: transformedPoint.y,
+                z: transformedPoint.z - cameraPosition.z)
+
+            // Project the current point
+            let projectedPoint = project(translatedPoint)
+
+            screen.draw(
+                0xffff_ff00, at: (x: Int(projectedPoint.x) + 131, y: Int(projectedPoint.y) + 131))
         }
     }
 }
