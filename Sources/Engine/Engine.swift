@@ -47,6 +47,12 @@ public struct Engine {
     }
 
     public mutating func receive(inputs: [Input]) {
+        for input in inputs {
+            switch input {
+            case .buttonPress:
+                direction *= -1
+            }
+        }
     }
 
     public mutating func update() {
@@ -54,6 +60,8 @@ public struct Engine {
 
     var cubeRotation: Float = 0.0
     var cameraPosition: Vec3D = .init(x: 0, y: 0, z: -5)
+    var cubeXOffset = 0
+    var direction = 1
 
     func project(_ vec3: Vec3D) -> Vec2D {
         let z = vec3.z - cameraPosition.z
@@ -62,6 +70,7 @@ public struct Engine {
 
     public mutating func draw<S: Screen>(on screen: S) {
         cubeRotation += 0.005
+        cubeXOffset += direction
 
         // FIXME: tmp fix to reset rotation before it spins out of control
         if cubeRotation > .pi { cubeRotation = 0 }
@@ -82,13 +91,17 @@ public struct Engine {
             let color = rainbowColors.randomElement()!
 
             screen.draw(
-                color, at: (x: Int(projectedPoint.x) + 131, y: Int(projectedPoint.y) + 131))
+                color,
+                at: (x: Int(projectedPoint.x) + 131 + cubeXOffset, y: Int(projectedPoint.y) + 131))
             screen.draw(
-                color, at: (x: Int(projectedPoint.x) + 132, y: Int(projectedPoint.y) + 131))
+                color,
+                at: (x: Int(projectedPoint.x) + 132 + cubeXOffset, y: Int(projectedPoint.y) + 131))
             screen.draw(
-                color, at: (x: Int(projectedPoint.x) + 131, y: Int(projectedPoint.y) + 132))
+                color,
+                at: (x: Int(projectedPoint.x) + 131 + cubeXOffset, y: Int(projectedPoint.y) + 132))
             screen.draw(
-                color, at: (x: Int(projectedPoint.x) + 132, y: Int(projectedPoint.y) + 132))
+                color,
+                at: (x: Int(projectedPoint.x) + 132 + cubeXOffset, y: Int(projectedPoint.y) + 132))
         }
     }
 }
