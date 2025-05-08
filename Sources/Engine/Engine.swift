@@ -9,6 +9,16 @@ public struct Engine {
     var cube: [Vec3D]
     var fov_factor: Float = 640
 
+    var rainbowColors: [UInt32] = [
+        0xFFFF_0000,  // Red
+        0xFFFF_7F00,  // Orange
+        0xFFFF_FF00,  // Yellow
+        0xFF00_FF00,  // Green
+        0xFF00_00FF,  // Blue
+        0xFF4B_0082,  // Indigo
+        0xFF8B_00FF,  // Violet
+    ]
+
     public init() {
         cube = Self.createCube()
     }
@@ -69,14 +79,16 @@ public struct Engine {
             // Project the current point
             let projectedPoint = project(translatedPoint)
 
+            let color = rainbowColors.randomElement()!
+
             screen.draw(
-                0xffff_0000, at: (x: Int(projectedPoint.x) + 131, y: Int(projectedPoint.y) + 131))
+                color, at: (x: Int(projectedPoint.x) + 131, y: Int(projectedPoint.y) + 131))
             screen.draw(
-                0xffff_0000, at: (x: Int(projectedPoint.x) + 132, y: Int(projectedPoint.y) + 131))
+                color, at: (x: Int(projectedPoint.x) + 132, y: Int(projectedPoint.y) + 131))
             screen.draw(
-                0xffff_0000, at: (x: Int(projectedPoint.x) + 131, y: Int(projectedPoint.y) + 132))
+                color, at: (x: Int(projectedPoint.x) + 131, y: Int(projectedPoint.y) + 132))
             screen.draw(
-                0xffff_0000, at: (x: Int(projectedPoint.x) + 132, y: Int(projectedPoint.y) + 132))
+                color, at: (x: Int(projectedPoint.x) + 132, y: Int(projectedPoint.y) + 132))
         }
     }
 }
