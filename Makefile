@@ -13,6 +13,7 @@ build:
 		--configuration release \
 		--verbose \
 		--triple $(TARGET) \
+		--product Application \
 		-Xcc -ffreestanding \
 		-Xswiftc -Xfrontend -Xswiftc -disable-stack-protector
 

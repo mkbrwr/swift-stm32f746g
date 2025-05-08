@@ -5,10 +5,11 @@ import PackageDescription
 let package = Package(
     name: "Swift-STM32F746G",
     platforms: [
-        .macOS("14.0")
+        .macOS("15.0")
     ],
     products: [
-        .library(name: "Application", type: .static, targets: ["Game"])
+        .library(name: "Application", type: .static, targets: ["Game"]),
+        .executable(name: "Playground", targets: ["Playground"]),
     ],
     dependencies: [
         .package(
@@ -27,10 +28,11 @@ let package = Package(
             ]),
         .target(
             name: "Engine",
-            dependencies: ["UART"],
+            // FIXME: .when(configuration: .release) is a tmp soulution to enable Playground
             swiftSettings: [
-                .enableExperimentalFeature("Embedded"),
-                .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"]),
+                .enableExperimentalFeature("Embedded", .when(configuration: .release)),
+                .unsafeFlags(
+                    ["-Xfrontend", "-emit-empty-object-file"], .when(configuration: .release)),
             ]),
         .target(
             name: "Board",
@@ -70,4 +72,13 @@ let package = Package(
                 .unsafeFlags(["-Xfrontend", "-emit-empty-object-file"]),
             ]),
         .target(name: "Support"),
+
+        // Playground
+        .executableTarget(
+            name: "Playground",
+            dependencies: ["PlaygroundSupport", "Engine"],
+            path: "Playground/Sources",
+            resources: [.process("Shaders.metal")]
+        ),
+        .target(name: "PlaygroundSupport", path: "Playground/PlaygroundSupport"),
     ])

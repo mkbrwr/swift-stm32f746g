@@ -52,6 +52,10 @@ public struct Engine {
 
     public mutating func draw<S: Screen>(on screen: S) {
         cubeRotation += 0.005
+
+        // FIXME: tmp fix to reset rotation before it spins out of control
+        if cubeRotation > .pi { cubeRotation = 0 }
+
         for point in cube {
             let transformedPointa = vec3RotateX(point, angle: cubeRotation)
             let transformedPointb = vec3RotateY(transformedPointa, angle: cubeRotation)
@@ -66,7 +70,13 @@ public struct Engine {
             let projectedPoint = project(translatedPoint)
 
             screen.draw(
-                0xffff_ff00, at: (x: Int(projectedPoint.x) + 131, y: Int(projectedPoint.y) + 131))
+                0xffff_0000, at: (x: Int(projectedPoint.x) + 131, y: Int(projectedPoint.y) + 131))
+            screen.draw(
+                0xffff_0000, at: (x: Int(projectedPoint.x) + 132, y: Int(projectedPoint.y) + 131))
+            screen.draw(
+                0xffff_0000, at: (x: Int(projectedPoint.x) + 131, y: Int(projectedPoint.y) + 132))
+            screen.draw(
+                0xffff_0000, at: (x: Int(projectedPoint.x) + 132, y: Int(projectedPoint.y) + 132))
         }
     }
 }
