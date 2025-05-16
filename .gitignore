@@ -1,4 +1,6 @@
+.DS_Store
 .build/
 .index-build/
 .vscode
 a.elf
+_Sources/
