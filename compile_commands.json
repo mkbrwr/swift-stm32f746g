@@ -1,0 +1,7 @@
+[
+  {
+    "directory": "/Users/mkbrwr/Developer/swift-stm32f746g/Sources/Support",
+    "command": "/Users/mkbrwr/Library/Developer/Toolchains/swift-DEVELOPMENT-SNAPSHOT-2025-04-12-a.xctoolchain/usr/bin/clang -target armv7em-none-none-eabi -O2 -DSWIFT_PACKAGE=1 -fblocks -I /Users/mkbrwr/Developer/swift-stm32f746g/Sources/Support/include --sysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX15.4.sdk -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -F /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks -fPIC -nostdlib -ffunction-sections -mthumb -Werror -Wall -static -fno-stack-protector -fno-common -g -MD -MT dependencies -MF /Users/mkbrwr/Developer/swift-stm32f746g/.build/armv7em-none-none-eabi/release/Support.build/Startup.c.d -c /Users/mkbrwr/Developer/swift-stm32f746g/Sources/Support/Startup.c",
+    "file": "/Users/mkbrwr/Developer/swift-stm32f746g/Sources/Support/Startup.c"
+  }
+]

@@ -1,6 +1,7 @@
 .DS_Store
 .build/
 .index-build/
+.cache/
 .vscode
 a.elf
 _Sources/
