@@ -3,16 +3,16 @@ import Support
 @main
 struct Application {
     static func main() {
+        initHeap()
         initDebug()
         initUartOutput()
 
-        var x: UInt8 = 49
+        let buf = [UInt8](repeating: 49, count: 5)
         while true {
-            tx(value: x)
-            x += 1
-            for _ in 0...100_000 {
-                nop()
+            for x in buf {
+                tx(value: x)
             }
+            nop()
         }
     }
 }
