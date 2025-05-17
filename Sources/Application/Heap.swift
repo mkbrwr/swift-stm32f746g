@@ -1,9 +1,9 @@
-nonisolated(unsafe) var topPointer: UnsafeMutableRawPointer!
-nonisolated(unsafe) var endPointer: UnsafeMutableRawPointer!
+nonisolated(unsafe) var topPointer: UnsafeMutablePointer<UInt8>!
+nonisolated(unsafe) var endPointer: UnsafeMutablePointer<UInt8>!
 
 @_cdecl("free")
 public func free(_ ptr: UnsafeMutableRawPointer?) {
-    print("call to free")
+    //print("call to free")
 }
 
 @_cdecl("posix_memalign")
@@ -23,7 +23,7 @@ public func posix_memalign(
         return 22
     }
 
-    ptr.pointee = new
+    ptr.pointee = UnsafeMutableRawPointer(new)!
     topPointer = new
 
     return 0

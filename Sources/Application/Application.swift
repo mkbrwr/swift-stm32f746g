@@ -17,18 +17,28 @@ struct Application {
         initGpio()
         initSdram()
         Lcd.initialize()
+        TouchPanel.initialize()
 
         while true {
-            drawRect(x: 130, y: 140, width: 90, height: 120, color: 0xffff00ff)
-            drawRect(x: 10, y: 20, width: 10, height: 20)
-            drawPoint(x: 40, y: 60)
-            drawPoint(x: 90, y: 120)
+            let touchdata = TouchPanel.readTouchData()
+            if touchdata.numberOfTouchPoints > 0 {
+                drawRect(x: 272 - touchdata.y, y: touchdata.x, width: 24, height: 24)
+            }
             Lcd.reloadConfiguration()
         }
     }
 }
 
+func initHeap() {
+    topPointer = UnsafeMutablePointer<UInt8>(bitPattern: 0x2001_0000)!  // start of sram1
+    endPointer = UnsafeMutablePointer<UInt8>(bitPattern: 0x2004_C000)!  // end of sram1
+}
+
 func drawPoint(x: Int, y: Int, color: UInt32 = 0xffffffff) {
+    guard x > 0 && y > 0 && x < 272 && y < 480 else {
+        print("Out of bounds!")
+        return
+    }
     let xA = y
     let yA = 272 - x
     dramBaseAsUInt32[yA * 480 + xA] = color
