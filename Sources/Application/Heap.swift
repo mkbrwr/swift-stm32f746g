@@ -49,3 +49,17 @@ func aeabi_memmove(_ dest: UnsafeMutableRawPointer?, _ src: UnsafeRawPointer?, _
         }
     }
 }
+
+@_cdecl("__aeabi_memcpy")
+func aeabi_memcpy(_ dest: UnsafeMutableRawPointer?, _ src: UnsafeRawPointer?, _ count: Int) {
+    guard let dest, let src, count > 0 else { return }
+
+    // Convert to byte pointers
+    let destination = dest.assumingMemoryBound(to: UInt8.self)
+    let source = src.assumingMemoryBound(to: UInt8.self)
+
+    // Simple forward copy (memcpy doesn't handle overlapping memory regions)
+    for i in 0..<count {
+        destination[i] = source[i]
+    }
+}

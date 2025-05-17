@@ -39,8 +39,8 @@ extension Application {
     }
 
     static func initHeap() {
-        topPointer = UnsafeMutableRawPointer(bitPattern: 0x2001_0000)!
-        endPointer = UnsafeMutableRawPointer(bitPattern: 0x2004_C000)!
+        topPointer = UnsafeMutableRawPointer(bitPattern: 0x2001_0000)!  // start of sram1
+        endPointer = UnsafeMutableRawPointer(bitPattern: 0x2004_C000)!  // end of sram1
     }
 }
 

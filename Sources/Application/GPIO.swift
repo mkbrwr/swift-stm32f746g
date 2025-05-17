@@ -1073,3 +1073,15 @@ extension GPIOA.AFRH {
         }
     }
 }
+
+/// General-purpose I/Os
+public typealias GPIOB = GPIOA
+public typealias GPIOC = GPIOA
+public typealias GPIOD = GPIOA
+public typealias GPIOE = GPIOA
+public typealias GPIOF = GPIOA
+public typealias GPIOG = GPIOA
+public typealias GPIOH = GPIOA
+public typealias GPIOI = GPIOA
+public typealias GPIOJ = GPIOA
+public typealias GPIOK = GPIOA
