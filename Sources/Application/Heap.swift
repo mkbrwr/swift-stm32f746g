@@ -29,6 +29,24 @@ public func posix_memalign(
     return 0
 }
 
+@_cdecl("__aeabi_memset")
+@_optimize(none)
+func aeabi_memset(_ dest: UnsafeMutableRawPointer?, _ count: Int, _ value: Int) {
+    guard let dest, count > 0 else {
+        return
+    }
+    let ptr = dest.assumingMemoryBound(to: UInt8.self)
+    for i in 0..<count {
+        ptr[i] = UInt8(value)
+    }
+}
+
+@_cdecl("__aeabi_memset8")
+@_optimize(none)
+func aeabi_memset8(_ dest: UnsafeMutableRawPointer?, _ count: Int, _ value: Int) {
+    aeabi_memset(dest, count, value)
+}
+
 @_cdecl("__aeabi_memmove")
 func aeabi_memmove(_ dest: UnsafeMutableRawPointer?, _ src: UnsafeRawPointer?, _ count: Int) {
     guard let dest, let src, count > 0 else { return }

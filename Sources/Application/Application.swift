@@ -19,12 +19,25 @@ struct Application {
         Lcd.initialize()
 
         while true {
-            for x in 0..<272 {
-                for y in 0..<480 {
-                    dramBaseAsUInt32[x * 480 + y] = 0xff00_0000 + UInt32(x) + UInt32(y) << 8
-                }
-            }
+            drawRect(x: 130, y: 140, width: 90, height: 120, color: 0xffff00ff)
+            drawRect(x: 10, y: 20, width: 10, height: 20)
+            drawPoint(x: 40, y: 60)
+            drawPoint(x: 90, y: 120)
             Lcd.reloadConfiguration()
+        }
+    }
+}
+
+func drawPoint(x: Int, y: Int, color: UInt32 = 0xffffffff) {
+    let xA = y
+    let yA = 272 - x
+    dramBaseAsUInt32[yA * 480 + xA] = color
+}
+
+func drawRect(x: Int, y: Int, width: Int, height: Int, color: UInt32 = 0xffffffff) {
+    for offsetX in 0..<width {
+        for offsetY in 0..<height {
+            drawPoint(x: x + offsetX, y: y + offsetY)
         }
     }
 }

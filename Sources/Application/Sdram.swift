@@ -104,7 +104,7 @@ func initSdram() {
     while fmc.sdsr.read().raw.busy != 0 { /* busy wait */  }
 
     // Clear out memory.
-    //for i in 0..<dramSize / 4 {
-    //    dramBaseAsUInt32[i] = 0
-    //}
+    for i in 0..<dramSize / 4 {
+        dramBaseAsUInt32[i] = 0xff000000
+    }
 }
