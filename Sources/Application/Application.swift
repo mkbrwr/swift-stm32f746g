@@ -4,15 +4,12 @@ import Support
 struct Application {
     static func main() {
         initHeap()
-        initDebug()
-        initUartOutput()
 
         initClocks()
         systemSetCoreClock()
 
-        // We are running at 200 MHz CPU frequency now. Set the UART baud rate to
-        // 115200 again based on the new CPU frequency.
-        usart1.brr.modify { $0.raw.storage = 100_000_000 / 115_200 }
+        initDebug()
+        initUartOutput()
 
         initGpio()
         initSdram()
@@ -30,8 +27,8 @@ struct Application {
 }
 
 func initHeap() {
-    topPointer = UnsafeMutablePointer<UInt8>(bitPattern: 0x2001_0000)!  // start of sram1
-    endPointer = UnsafeMutablePointer<UInt8>(bitPattern: 0x2004_C000)!  // end of sram1
+    topPointer = UnsafeMutablePointer<UInt8>(bitPattern: 0x20010000)!  // start of sram1a
+    endPointer = UnsafeMutablePointer<UInt8>(bitPattern: 0x20042fff)!  // end of sram1a
 }
 
 func drawPoint(x: Int, y: Int, color: UInt32 = 0xffffffff) {

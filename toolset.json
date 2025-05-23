@@ -33,5 +33,18 @@
       "-fno-stack-protector",
       "-fno-common"
     ]
+  },
+  "linker": {
+    "extraCLIOptions": [
+      "-nostdlib",
+      "-t",
+      "-v",
+      "-T",
+      "Sources/Support/linkerscript.ld",
+      "-static",
+      "-e",
+      "vector_table",
+      "--orphan-handling=error"
+    ]
   }
 }

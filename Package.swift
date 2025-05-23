@@ -8,14 +8,14 @@ let package = Package(
         .macOS(.v15)
     ],
     products: [
-        .library(name: "Application", type: .static, targets: ["Application"])
+        .executable(name: "Application", targets: ["Application"])
     ],
     dependencies: [
         .package(
             url: "https://github.com/apple/swift-mmio", branch: "main")
     ],
     targets: [
-        .target(
+        .executableTarget(
             name: "Application",
             dependencies: [
                 "Support",

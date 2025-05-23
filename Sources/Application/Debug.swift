@@ -29,8 +29,7 @@ extension Application {
         gpioa.pupdr.modify { $0.raw.pupdr9 = 0b00 }  // Disable pull up/down on Pin A9
         gpioa.afrh.modify { $0.raw.afrh9 = 0b0111 }  // Set alternate function usart1 on Pin A9
 
-        // Configure UART1, set the baud rate to 115200 (we boot at 16 MHz)
-        usart1.brr.modify { $0.raw.storage = 16_000_000 / 115_200 }
+        usart1.brr.modify { $0.raw.storage = 100_000_000 / 115_200 }
 
         usart1.cr1.modify {
             $0.raw.ue = 1  // Enable USART 1

@@ -8,23 +8,19 @@ TOOLSET := toolset.json
 
 .PHONY: build
 build:
-	@echo "compiling..."
+	@echo "building..."
 	$(SWIFT) build \
 	    --configuration release \
 		--triple $(TARGET) \
 		--toolset $(TOOLSET) \
 		--verbose
 
-	@echo "linking..."
-		$(CLANG) -v -target $(TARGET) -fuse-ld=lld -nostdlib -static \
-        -Wl,-e,vector_table -Wl,--gc-sections -Wl,-T,Sources/Support/linkerscript.ld \
-        .build/release/libApplication.a \
-        -o a.elf
+	mv .build/release/Application .build/release/Application.elf
 
 .PHONY: flash
 flash:
 	@echo "flashing..."
-	$(STM32_Programmer_CLI) -c port=SWD -d a.elf -s
+	$(STM32_Programmer_CLI) -c port=SWD -d .build/release/Application.elf -s
 
 .PHONY: run
 run: build flash
@@ -33,4 +29,3 @@ run: build flash
 clean:
 	@echo "cleaning..."
 	@$(SWIFT) package clean
-	@rm -f a.elf

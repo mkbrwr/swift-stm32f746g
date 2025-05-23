@@ -2,6 +2,7 @@ extern int main(int argc, char *argv[]);
 
 void reset(void) {
     main(0, 0);
+    while (1) {}
 }
 
 void interrupt(void) {
