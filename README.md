@@ -6,4 +6,4 @@ make flash
 Or STM32CubeProgrammer GUI can be used
 
 # Result
-https://github.com/user-attachments/assets/25acaab6-9485-4956-8606-6de5df287f81
+https://github.com/mkbrwr/swift-stm32f746g/blob/main/Hi-Demo.mov
