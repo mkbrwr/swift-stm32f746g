@@ -1,7 +1,7 @@
 SWIFT_TOOLCHAIN := ~/.swiftly/bin
 SWIFT := $(SWIFT_TOOLCHAIN)/swift
 CLANG := $(SWIFT_TOOLCHAIN)/clang
-STM32_Programmer_CLI = ~/Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin/STM32_Programmer_CLI
+STM32_Programmer_CLI = /Applications/STMicroelectronics/STM32Cube/STM32CubeProgrammer/STM32CubeProgrammer.app/Contents/MacOs/bin/STM32_Programmer_CLI
 
 TARGET := armv7em-none-none-eabi
 TOOLSET := toolset.json
